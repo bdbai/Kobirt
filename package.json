@@ -1,0 +1,22 @@
+{
+  "name": "kobirt",
+  "version": "0.1.0",
+  "description": "A QQbot for Mojo-Webqq in honour of Konammzju",
+  "main": "server.js",
+  "author": "bdbai <bdbaiapp@163.com>",
+  "license": "GPL-3.0+",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/bdbai/Kobirt.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  },
+  "scripts": {
+    "start": "node ./out/server.js"
+  }
+}

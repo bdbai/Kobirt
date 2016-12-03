@@ -1,0 +1,1 @@
+{"version":3,"file":"DisposeHandler.js","sourceRoot":"","sources":["../../../../src/Message/Handler/DisposeHandler.ts"],"names":[],"mappings":";AAEA,+BAAyB,gBAAgB,CAAC,CAAA;AAE1C;IACW,MAAM,CAAC,OAAiB;QAC3B,OAAO,CAAC,OAAO,EAAE,CAAC;QAClB,MAAM,CAAC,sBAAY,CAAC,OAAO,CAAC;IAChC,CAAC;AACL,CAAC;AAED;kBAAe,cAAc,CAAC"}
