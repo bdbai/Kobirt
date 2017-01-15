@@ -1,5 +1,5 @@
 "use strict";
-const CommandHandlerBase_1 = require('./CommandHandlerBase');
+const CommandHandlerBase_1 = require("./CommandHandlerBase");
 class CommandHandler extends CommandHandlerBase_1.default {
     constructor(Prefix) {
         super();

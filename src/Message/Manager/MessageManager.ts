@@ -12,10 +12,15 @@ class MessageManager implements IMessageManager {
         this.handlers.push(new handler());
     }
 
-    public ProcessMessage(message: IMessage): void {
+    public async ProcessMessage(message: IMessage): Promise<void> {
+        if (message.class !== 'recv') {
+            message.Dispose();
+            return;
+        }
+
         let handled = false;
         for (const handler of this.handlers) {
-            const result = handler.Handle(message);
+            const result = await handler.Handle(message);
             if (result === HandleResult.Handled) {
                 handled = true;
                 break;

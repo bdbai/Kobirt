@@ -8,7 +8,7 @@ import ICommandHandler from '../../Command/Handler/ICommandHandler';
 class CommandMessageHandler implements IMessageHandler {
     constructor(private handler: ICommandHandler) { }
 
-    public Handle(message: IMessage): HandleResult {
+    public async Handle(message: IMessage): Promise<HandleResult> {
         const command = new Command(message.content, message);
         return this.handler.Handle(command);
     }

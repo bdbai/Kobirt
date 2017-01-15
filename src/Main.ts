@@ -12,13 +12,18 @@ import DisposeHandler from './Message/Handler/DisposeHandler';
 // Command handlers
 import CommandHandler from './Command/Handler/CommandHandler';
 import HelpHandler from './Command/Handler/HelpHandler';
+import AccountHandler from './Command/Handler/AccountHandler';
+
+// LeanCloud init
+import * as AV from 'leancloud-storage';
 
 class Server {
 
     public static InitMessageManager(): IMessageManager {
         const commandHandler = new CommandHandler('K')
             // Insert your command handlers here!
-            .RegisterSubHandler(new HelpHandler());
+            .RegisterSubHandler(new HelpHandler())
+            .RegisterSubHandler(new AccountHandler());
         return new MessageManager([
             new HelloHandler(),
             new CommandMessageHandler(commandHandler),
@@ -28,6 +33,11 @@ class Server {
     }
 
     public static Main(): Number {
+        AV.init({
+            appId: process.env.LeanAppId,
+            appKey: process.env.LeanAppKey
+        });
+
         const app = express();
         app.use(bodyParser.json());
         new RequestAdapter(app, Server.InitMessageManager());

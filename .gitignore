@@ -1,3 +1,11 @@
+# production files
+env.sh
+
+# typings
+.vscode
+typings
+typings.json
+
 # Logs
 logs
 *.log

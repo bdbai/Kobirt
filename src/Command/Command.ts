@@ -1,15 +1,26 @@
 import IMessage from '../Message/IMessage';
 
 class Command {
-    constructor(public Content: string, public Message: IMessage) { }
+    constructor(
+        public Content: string,
+        public Message: IMessage,
+        public AccumulatedPrefixes = []
+    ) { }
 
-    public getSubCommand(prefix: string) {
-        if (prefix.startsWith(prefix)) {
+    public GetSubCommand(prefix: string) {
+        if (this.Content.startsWith(prefix)) {
             const prefixLen = prefix.length;
-            return new Command(this.Content.substr(prefixLen).trim(), this.Message);
+            return new Command(
+                this.Content.substr(prefixLen).trim(),
+                this.Message,
+                [ ...this.AccumulatedPrefixes, this.Content.substr(0, prefixLen) ]
+            );
         } else {
-            return this; 
+            return this;
         }
+    }
+    public GetAccumulatedPrefix() {
+        return this.AccumulatedPrefixes.join(' ');
     }
 }
 

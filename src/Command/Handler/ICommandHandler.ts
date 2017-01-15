@@ -4,7 +4,7 @@ import Command from '../Command';
 
 interface ICommandHandler {
     Prefix: string,
-    Handle: (command: Command) => HandleResult;
+    Handle: (command: Command) => Promise<HandleResult>;
     RegisterSubHandler: (subCommandHandler: ICommandHandler) => ICommandHandler;
 }
 

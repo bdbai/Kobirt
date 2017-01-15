@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "leancloud-storage": "^1.5.3",
+    "node-fetch": "^1.6.3"
   },
   "scripts": {
     "start": "node ./out/server.js"

@@ -1,18 +1,21 @@
 interface IMessage {
-    msg_time: string;
+    id: number,
+    class: string,
+    time: string,
     content: string,
     msg_class: string,
     sender: string,
     sender_id: string,
-    sender_qq: string,
+    sender_uid: string,
     receiver: string,
     receiver_id: string,
-    receiver_qq: string,
+    receiver_uid: string,
     group: string,
     group_id: string,
-    gnumber: string,
+    group_uid: string,
     msg_id: string,
     type: string,
+    post_type: string,
 
     Reply: (content: String) => any
     Dispose: () => any
