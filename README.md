@@ -3,6 +3,14 @@
 K 菊，Ingress 昆绿大佬，被<del>咸鱼</del>苏绿膜。
 
 ## 使用方法
+### 准备
+你需要：
+
+1. 在 LeanCloud 上创建一个应用  
+Kobirt 需要 LeacCloud 作为存储后端。
+2. 在 AgentStats 上创建一个账户  
+用于接收分享的特工资料。
+
 ### 搭建
 1. 在服务器上部署 [sjdy521/Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq) 项目，设置上报地址为 `http://localhost:5001`
 2. 按照提示登录机器人 QQ

@@ -22,7 +22,7 @@ class ShowoffHandler extends CommandHandlerBase {
 
             const title = agent.Level > 9 ? '大佬' : '特工';
             const ms = agent.Medals;
-            command.Message.Reply(`${title} ${agent.AgentId} 当前 ${agent.Level} 级，共有勋章 ${medalCount('bronze', ms)} 铜，${medalCount('silver', ms)} 银，${medalCount('gold', ms)} 金, ${medalCount('platinum', ms)} 银, ${medalCount('black', ms)} 黑\r\n
+            command.Message.Reply(`${title} ${agent.AgentId} 当前 ${agent.Level} 级，共有勋章 ${medalCount('bronze', ms)} 铜，${medalCount('silver', ms)} 银，${medalCount('gold', ms)} 金， ${medalCount('platinum', ms)} 白金， ${medalCount('black', ms)} 黑。\r\n
 包含部分不再颁发的勋章。`);
         } catch (err) {
             command.Message.Reply('啊哦~\r\n' + err.message);
