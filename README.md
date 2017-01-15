@@ -10,6 +10,7 @@ K 菊，Ingress 昆绿大佬，被<del>咸鱼</del>苏绿膜。
 4. 执行命令
 ```sh
 source env.sh
+npm install
 npm start
 ```
 
@@ -21,10 +22,12 @@ K 账户 - 输出账户命令帮助
 K 账户 我是谁 - 输出绑定的 Agent Stats 特工名
 K 账户 绑定 - 绑定 Agent Stats
 K 账户 注销 - 解除绑定 Agent Stats
+K 得瑟 - 显示粗略统计信息
 ```
 #### 群聊
 ```
 K help 输出帮助
+K 得瑟 - 显示粗略统计信息
 ```
 
 ## 二次开发

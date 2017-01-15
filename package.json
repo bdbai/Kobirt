@@ -20,5 +20,8 @@
   },
   "scripts": {
     "start": "node ./out/server.js"
+  },
+  "devDependencies": {
+    "commander": "^2.9.0"
   }
 }

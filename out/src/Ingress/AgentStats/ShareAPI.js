@@ -9,6 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const fetch = require("node-fetch");
 const User_1 = require("../User");
+const medalLevels = {
+    bronze: 0, silver: 1, gold: 2, platinum: 3, black: 4
+};
+function GreaterLevel(i1, i2) {
+    if (i1 === 'unacquired') {
+        return i2;
+    }
+    if (i1.startsWith('level')) {
+        return parseInt(i1.substr(6)) > parseInt(i2.substr(6)) ? i1 : i2;
+    }
+    return medalLevels[i1] > medalLevels[i2] ? i1 : i2;
+}
 function loadUserFromId(agentId, startYear = '2012', startMonth = '01', startDay = '01') {
     return __awaiter(this, void 0, void 0, function* () {
         const date = new Date();
@@ -40,7 +52,7 @@ function loadUserFromId(agentId, startYear = '2012', startMonth = '01', startDay
                     let lastLevel = 'unacquired';
                     for (const level in this.date) {
                         if (this.date[level] === 1) {
-                            lastLevel = level;
+                            lastLevel = GreaterLevel(lastLevel, level);
                         }
                     }
                     return lastLevel;

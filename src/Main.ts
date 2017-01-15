@@ -13,6 +13,7 @@ import DisposeHandler from './Message/Handler/DisposeHandler';
 import CommandHandler from './Command/Handler/CommandHandler';
 import HelpHandler from './Command/Handler/HelpHandler';
 import AccountHandler from './Command/Handler/AccountHandler';
+import ShowoffHandler from './Command/Handler/ShowoffHandler';
 
 // LeanCloud init
 import * as AV from 'leancloud-storage';
@@ -23,7 +24,8 @@ class Server {
         const commandHandler = new CommandHandler('K')
             // Insert your command handlers here!
             .RegisterSubHandler(new HelpHandler())
-            .RegisterSubHandler(new AccountHandler());
+            .RegisterSubHandler(new AccountHandler())
+            .RegisterSubHandler(new ShowoffHandler());
         return new MessageManager([
             new HelloHandler(),
             new CommandMessageHandler(commandHandler),

@@ -3,6 +3,20 @@ import IUser from '../IUser';
 import User from '../User';
 import IMedal from '../IMedal';
 
+const medalLevels = {
+    bronze: 0, silver: 1, gold: 2, platinum: 3, black: 4
+}
+
+function GreaterLevel(i1: string, i2: string) {
+    if (i1 === 'unacquired') {
+        return i2;
+    }
+    if (i1.startsWith('level')) {
+        return parseInt(i1.substr(6)) > parseInt(i2.substr(6)) ? i1 : i2;
+    }
+    return medalLevels[i1] > medalLevels[i2] ? i1 : i2;
+}
+
 export async function loadUserFromId(agentId: string, startYear = '2012', startMonth = '01', startDay = '01'): Promise<IUser> {
     const date = new Date();
     const headers = new fetch.Headers();
@@ -34,7 +48,7 @@ export async function loadUserFromId(agentId: string, startYear = '2012', startM
                 let lastLevel = 'unacquired';
                 for (const level in this.date) {
                     if (this.date[level] === 1) {
-                        lastLevel = level;
+                        lastLevel = GreaterLevel(lastLevel, level);
                     }
                 }
                 return lastLevel;

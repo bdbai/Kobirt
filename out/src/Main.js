@@ -11,13 +11,15 @@ const DisposeHandler_1 = require("./Message/Handler/DisposeHandler");
 const CommandHandler_1 = require("./Command/Handler/CommandHandler");
 const HelpHandler_1 = require("./Command/Handler/HelpHandler");
 const AccountHandler_1 = require("./Command/Handler/AccountHandler");
+const ShowoffHandler_1 = require("./Command/Handler/ShowoffHandler");
 // LeanCloud init
 const AV = require("leancloud-storage");
 class Server {
     static InitMessageManager() {
         const commandHandler = new CommandHandler_1.default('K')
             .RegisterSubHandler(new HelpHandler_1.default())
-            .RegisterSubHandler(new AccountHandler_1.default());
+            .RegisterSubHandler(new AccountHandler_1.default())
+            .RegisterSubHandler(new ShowoffHandler_1.default());
         return new MessageManager_1.default([
             new HelloHandler_1.default(),
             new CommandMessageHandler_1.default(commandHandler),

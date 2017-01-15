@@ -3,7 +3,6 @@ interface IMessage {
     class: string,
     time: string,
     content: string,
-    msg_class: string,
     sender: string,
     sender_id: string,
     sender_uid: string,
@@ -13,7 +12,6 @@ interface IMessage {
     group: string,
     group_id: string,
     group_uid: string,
-    msg_id: string,
     type: string,
     post_type: string,
 
