@@ -12,7 +12,14 @@ class CommandHandlerBase {
     constructor() {
         this._subCommandHandlers = Array();
         this.Prefix = '';
-        this.accepted = (command) => command.Content.startsWith(this.Prefix);
+        this.accepted = (command) => command.StartsWith(this.Prefix);
+    }
+    handleError(err, command) {
+        return __awaiter(this, void 0, void 0, function* () {
+            command.Message.Reply(`出了点小问题\r\n${err.message}`);
+            console.error(err);
+            return HandleResult_1.default.Handled;
+        });
     }
     processCommand(command) {
         return __awaiter(this, void 0, void 0, function* () {

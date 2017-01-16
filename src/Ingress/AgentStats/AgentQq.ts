@@ -1,5 +1,5 @@
 import * as AV from 'leancloud-storage';
-import { loadUserFromId } from './ShareAPI';
+import { fetchShareFromList } from './ShareAPI';
 
 export default class AgentQq extends AV.Object {
     get Qq() {
@@ -16,9 +16,9 @@ export default class AgentQq extends AV.Object {
         this.set('AgentId', value);
     }
 
-    public static async checkUserByQq(qq: string): Promise<AgentQq> {
+    public static async checkUserByQq(qq: number): Promise<AgentQq> {
         const q = new AV.Query(AgentQq);
-        q.equalTo('Qq', qq);
+        q.equalTo('Qq', qq.toString());
         return await q.first() as AgentQq;
     }
     public static async checkUserByAgentId(agentId: string): Promise<AgentQq> {
@@ -29,11 +29,12 @@ export default class AgentQq extends AV.Object {
     public async unbind(): Promise<{}> {
         return await this.destroy();
     }
-    public static async bindUserByQq(qq: string, agentId: string): Promise<AgentQq> {
-        const user = await loadUserFromId(agentId);
+    public static async bindUserByQq(qq: number, agentId: string): Promise<AgentQq> {
+        const users = await fetchShareFromList();
+        if (!users.find(i => i === agentId)) throw new Error('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？');
         const obj = new AgentQq();
-        obj.Qq = qq;
-        obj.AgentId = user.AgentId;
+        obj.Qq = qq.toString();
+        obj.AgentId = agentId;
         return await obj.save() as AgentQq;
     }
 }

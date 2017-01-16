@@ -12,6 +12,8 @@ const User_1 = require("../User");
 const medalLevels = {
     bronze: 0, silver: 1, gold: 2, platinum: 3, black: 4
 };
+const requestHeaders = new fetch.Headers();
+requestHeaders.append('AS-Key', process.env.ASKey || '');
 function GreaterLevel(i1, i2) {
     if (i1 === 'unacquired') {
         return i2;
@@ -24,11 +26,7 @@ function GreaterLevel(i1, i2) {
 function loadUserFromId(agentId, startYear = '2012', startMonth = '01', startDay = '01') {
     return __awaiter(this, void 0, void 0, function* () {
         const date = new Date();
-        const headers = new fetch.Headers();
-        headers.append('AS-Key', process.env.ASKey || '');
-        const response = yield fetch(`https://api.agent-stats.com/share/${agentId}/${startYear}-${startMonth}-${startDay}`, {
-            headers: headers
-        });
+        const response = yield fetch(`https://api.agent-stats.com/share/${agentId}/${startYear}-${startMonth}-${startDay}`, { headers: requestHeaders });
         const result = yield response.text();
         let resultObj;
         if (result.match(/error/)) {
@@ -70,4 +68,14 @@ function loadUserFromId(agentId, startYear = '2012', startMonth = '01', startDay
     });
 }
 exports.loadUserFromId = loadUserFromId;
+function fetchShareFromList() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const response = yield fetch('https://api.agent-stats.com/share', { headers: requestHeaders });
+        const list = yield response.json();
+        return list
+            .filter(i => i.direction.toLowerCase() === 'from')
+            .map(i => i.username);
+    });
+}
+exports.fetchShareFromList = fetchShareFromList;
 //# sourceMappingURL=ShareAPI.js.map

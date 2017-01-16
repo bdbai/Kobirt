@@ -14,6 +14,7 @@ import CommandHandler from './Command/Handler/CommandHandler';
 import HelpHandler from './Command/Handler/HelpHandler';
 import AccountHandler from './Command/Handler/AccountHandler';
 import ShowoffHandler from './Command/Handler/ShowoffHandler';
+import JoinGroupHandler from './Command/Handler/JoinGroupHandler';
 
 // LeanCloud init
 import * as AV from 'leancloud-storage';
@@ -25,6 +26,7 @@ class Server {
             // Insert your command handlers here!
             .RegisterSubHandler(new HelpHandler())
             .RegisterSubHandler(new AccountHandler())
+            .RegisterSubHandler(new JoinGroupHandler())
             .RegisterSubHandler(new ShowoffHandler());
         return new MessageManager([
             new HelloHandler(),

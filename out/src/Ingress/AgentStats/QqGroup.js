@@ -8,52 +8,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const AV = require("leancloud-storage");
-const ShareAPI_1 = require("./ShareAPI");
-class AgentQq extends AV.Object {
+class QqGroup extends AV.Object {
     get Qq() {
         return this.get('Qq');
     }
     set Qq(value) {
         this.set('Qq', value);
     }
-    get AgentId() {
-        return this.get('AgentId');
+    get Group() {
+        return this.get('Group');
     }
-    set AgentId(value) {
-        this.set('AgentId', value);
+    set Group(value) {
+        this.set('Group', value);
     }
-    static checkUserByQq(qq) {
+    static fetchMemberList(group) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = new AV.Query(AgentQq);
-            q.equalTo('Qq', qq.toString());
-            return yield q.first();
+            const q = new AV.Query(QqGroup);
+            q.equalTo('Group', group.toString());
+            return yield q.find();
         });
     }
-    static checkUserByAgentId(agentId) {
+    static fetchJoinedGroups(qq) {
         return __awaiter(this, void 0, void 0, function* () {
-            const q = new AV.Query(AgentQq);
-            q.equalTo('AgentId', agentId);
-            return yield q.first();
+            const q = new AV.Query(QqGroup);
+            q.equalTo('Qq', qq);
+            return yield q.find();
         });
     }
-    unbind() {
+    static findQqGroup(qq, group) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.destroy();
+            const q = new AV.Query(QqGroup);
+            q.equalTo('Qq', qq);
+            q.equalTo('Group', group.toString());
+            return (yield q.first()) || null;
         });
     }
-    static bindUserByQq(qq, agentId) {
+    static addMemberToList(qq, group) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield ShareAPI_1.fetchShareFromList();
-            if (!users.find(i => i === agentId))
-                throw new Error('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？');
-            const obj = new AgentQq();
-            obj.Qq = qq.toString();
-            obj.AgentId = agentId;
+            const obj = new QqGroup();
+            obj.Qq = qq;
+            obj.Group = group.toString();
             return yield obj.save();
         });
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = AgentQq;
-AV.Object.register(AgentQq);
-//# sourceMappingURL=AgentQq.js.map
+exports.default = QqGroup;
+AV.Object.register(QqGroup);
+//# sourceMappingURL=QqGroup.js.map

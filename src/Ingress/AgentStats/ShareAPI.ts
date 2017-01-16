@@ -7,6 +7,9 @@ const medalLevels = {
     bronze: 0, silver: 1, gold: 2, platinum: 3, black: 4
 }
 
+const requestHeaders = new fetch.Headers();
+requestHeaders.append('AS-Key', process.env.ASKey || '');
+
 function GreaterLevel(i1: string, i2: string) {
     if (i1 === 'unacquired') {
         return i2;
@@ -19,13 +22,9 @@ function GreaterLevel(i1: string, i2: string) {
 
 export async function loadUserFromId(agentId: string, startYear = '2012', startMonth = '01', startDay = '01'): Promise<IUser> {
     const date = new Date();
-    const headers = new fetch.Headers();
-    headers.append('AS-Key', process.env.ASKey || '');
     const response = await fetch(
         `https://api.agent-stats.com/share/${agentId}/${startYear}-${startMonth}-${startDay}`,
-        {
-            headers: headers
-        });
+        { headers: requestHeaders });
     const result = await response.text();
     let resultObj;
     if (result.match(/error/)) {
@@ -63,4 +62,18 @@ export async function loadUserFromId(agentId: string, startYear = '2012', startM
     }
 
     return new User(agentId, medals, AP, Level);
+}
+
+export async function fetchShareFromList() {
+    const response = await fetch(
+        'https://api.agent-stats.com/share',
+        { headers: requestHeaders });
+    const list = await response.json() as Array<{
+        username: string,
+        faction: string,
+        direction: string
+    }>;
+    return list
+        .filter(i => i.direction.toLowerCase() === 'from')
+        .map(i => i.username);
 }

@@ -5,8 +5,11 @@ class Command {
         this.Message = Message;
         this.AccumulatedPrefixes = AccumulatedPrefixes;
     }
+    StartsWith(prefix) {
+        return this.Content.toLowerCase().startsWith(prefix.toLowerCase());
+    }
     GetSubCommand(prefix) {
-        if (this.Content.startsWith(prefix)) {
+        if (this.StartsWith(prefix)) {
             const prefixLen = prefix.length;
             return new Command(this.Content.substr(prefixLen).trim(), this.Message, [...this.AccumulatedPrefixes, this.Content.substr(0, prefixLen)]);
         }

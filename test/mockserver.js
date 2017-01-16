@@ -22,7 +22,7 @@ const messageBody = {
     receiver:     '膜K菊',
     receiver_id:  1008610086,
     receiver_uid: 2174034256,
-    type:         'friend_message',
+    type:         'sess_message',
     post_type:    'receive_message'
 }
 if (commands.group) {

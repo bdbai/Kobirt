@@ -1,11 +1,14 @@
-import CommandHandlerBase from './CommandHandlerBase';
+import HelpHandler from './HelpHandler';
 import Command from '../Command';
 import HandleResult from '../../Message/Handler/HandleResult';
 
-class CommandHandler extends CommandHandlerBase {
+export default class CommandHandler extends HelpHandler {
     constructor(public Prefix: string) {
         super();
-    };
-}
+    }
 
-export default CommandHandler;
+    public async processCommand(command: Command): Promise<HandleResult> {
+        command.AccumulatedPrefixes.push(this.Prefix);
+        return await super.processCommand(command);
+    }
+}

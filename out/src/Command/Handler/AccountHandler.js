@@ -27,8 +27,7 @@ class WhoAmIHandler extends CommandHandlerBase_1.default {
                 }
             }
             catch (err) {
-                command.Message.Reply('出了点问题。\r\n' + err.message.toString());
-                console.log(err);
+                this.handleError(err, command);
             }
             return HandleResult_1.default.Handled;
         });
@@ -44,13 +43,13 @@ class BindHandler extends CommandHandlerBase_1.default {
             const id = command.GetSubCommand(this.Prefix).Content;
             if (id === '') {
                 command.Message.Reply(`绑定只需两步：
-1. 登录 agent-stats.com，将个人资料分享给 Kobirt
+1. 登录 www.agent-stats.com，在“我的共享列表”中将个人资料分享给 Kobirt
 2. 给我发指令 ${command.GetAccumulatedPrefix()} ${this.Prefix} 加你的 ID`);
                 return HandleResult_1.default.Handled;
             }
             try {
-                const userByQQ = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
                 const userById = yield AgentQq_1.default.checkUserByAgentId(id);
+                const userByQQ = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
                 if (userByQQ) {
                     command.Message.Reply('已经绑定过了哟');
                     return HandleResult_1.default.Handled;
@@ -63,8 +62,7 @@ class BindHandler extends CommandHandlerBase_1.default {
                 command.Message.Reply('绑定完成！接下来请到群中发指令 K 诶嘿 参与该群特工排行榜');
             }
             catch (err) {
-                command.Message.Reply('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？\r\n' + err.message.toString());
-                console.error(err);
+                this.handleError(err, command);
             }
             return HandleResult_1.default.Handled;
         });
@@ -84,11 +82,10 @@ class UnbindHandler extends CommandHandlerBase_1.default {
                     return HandleResult_1.default.Handled;
                 }
                 yield userByQQ.unbind();
-                command.Message.Reply('再见QAQ');
+                command.Message.Reply('再见QAQ\r\n记得到 AgentStats 网站取消分享哦~');
             }
             catch (err) {
-                command.Message.Reply('出了点问题。\r\n' + err.message.toString());
-                console.log(err);
+                this.handleError(err, command);
             }
             return HandleResult_1.default.Handled;
         });
@@ -98,7 +95,7 @@ class AccountHandler extends CommandHandlerBase_1.default {
     constructor() {
         super();
         this.Prefix = '账户';
-        this.accepted = (command) => command.Content.startsWith(this.Prefix) &&
+        this.accepted = (command) => command.StartsWith(this.Prefix) &&
             !command.Message.group;
         this
             .RegisterSubHandler(new WhoAmIHandler())

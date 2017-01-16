@@ -8,7 +8,13 @@ abstract class CommandHandlerBase implements ICommandHandler {
 
     abstract Prefix = '';
 
-    protected accepted = (command: Command) => command.Content.startsWith(this.Prefix);
+    protected accepted = (command: Command) => command.StartsWith(this.Prefix);
+
+    protected async handleError(err: Error, command: Command): Promise<HandleResult> {
+        command.Message.Reply(`出了点小问题\r\n${err.message}`);
+        console.error(err);
+        return HandleResult.Handled;
+    }
 
     protected async processCommand(command: Command): Promise<HandleResult> {
         return HandleResult.Skipped;
