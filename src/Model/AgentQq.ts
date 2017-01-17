@@ -1,20 +1,15 @@
 import * as AV from 'leancloud-storage';
-import { fetchShareFromList } from './ShareAPI';
+import AVProperty from './AVProperty';
+import QqGroup from './QqGroup';
+import L8Meetup from './L8Meetup';
 
 export default class AgentQq extends AV.Object {
-    get Qq() {
-        return this.get('Qq');
-    }
-    set Qq(value: string) {
-        this.set('Qq', value);
-    }
 
-    get AgentId() {
-        return this.get('AgentId');
-    }
-    set AgentId(value: string) {
-        this.set('AgentId', value);
-    }
+    @AVProperty()
+    Qq: string;
+
+    @AVProperty()
+    AgentId: string;
 
     public static async checkUserByQq(qq: number): Promise<AgentQq> {
         const q = new AV.Query(AgentQq);
@@ -27,11 +22,11 @@ export default class AgentQq extends AV.Object {
         return await q.first() as AgentQq;
     }
     public async unbind(): Promise<{}> {
+        await QqGroup.destroyQq(this);
+        await L8Meetup.destoryQq(this);
         return await this.destroy();
     }
     public static async bindUserByQq(qq: number, agentId: string): Promise<AgentQq> {
-        const users = await fetchShareFromList();
-        if (!users.find(i => i === agentId)) throw new Error('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？');
         const obj = new AgentQq();
         obj.Qq = qq.toString();
         obj.AgentId = agentId;

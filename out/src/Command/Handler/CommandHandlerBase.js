@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const HandleResult_1 = require("../../Message/Handler/HandleResult");
+const BadCommand_1 = require("../Error/BadCommand");
 class CommandHandlerBase {
     constructor() {
         this._subCommandHandlers = Array();
@@ -16,7 +17,12 @@ class CommandHandlerBase {
     }
     handleError(err, command) {
         return __awaiter(this, void 0, void 0, function* () {
-            command.Message.Reply(`出了点小问题\r\n${err.message}`);
+            if (err.constructor.name === BadCommand_1.default.name) {
+                command.Message.Reply(err.message);
+            }
+            else {
+                command.Message.Reply(`出了点小问题\r\n${err.message}`);
+            }
             console.error(err);
             return HandleResult_1.default.Handled;
         });

@@ -1,20 +1,17 @@
-import CommandHandlerBase from './CommandHandlerBase';
+import LoggedinHandlerBase from './LoggedinHandlerBase';
 import Command from '../Command';
 import HandleResult from '../../Message/Handler/HandleResult';
-import AgentQq from '../../Ingress/AgentStats/AgentQq';
-import QqGroup from '../../Ingress/AgentStats/QqGroup';
+import AgentQq from '../../Model/AgentQq';
+import QqGroup from '../../Model/QqGroup';
+import BadCommand from '../Error/BadCommand';
 
-class ExitGroupHandler extends CommandHandlerBase {
+class ExitGroupHandler extends LoggedinHandlerBase {
     public Prefix = '算了吧';
 
-    public async processCommand(command: Command): Promise<HandleResult> {
-        let user: AgentQq;
+    public async processUserCommand(command: Command, user: AgentQq): Promise<HandleResult> {
         try {
-            user = await AgentQq.checkUserByQq(command.Message.sender_uid);
-            if (!user) throw new Error('别捣乱QAQ');
-
             const qqGroup = await QqGroup.findQqGroup(user, command.Message.group_uid);
-            if (!qqGroup) throw new Error('你还没诶嘿呢');
+            if (!qqGroup) throw new BadCommand('你还没诶嘿呢', command);
 
             await qqGroup.destroy();
             command.Message.Reply('好吧，再见朋友QAQ');
@@ -24,22 +21,18 @@ class ExitGroupHandler extends CommandHandlerBase {
     }
 }
 
-export default class JoinGroupHandler extends CommandHandlerBase {
+export default class JoinGroupHandler extends LoggedinHandlerBase {
     public Prefix = '诶嘿';
 
     public accepted = (command: Command) =>
         command.StartsWith(this.Prefix) &&
         !!command.Message.group;
 
-    public async processCommand(command: Command): Promise<HandleResult> {
+    public async processUserCommand(command: Command, user: AgentQq): Promise<HandleResult> {
         const thisGroup = command.Message.group_uid.toString();
-        let user: AgentQq;
         try {
-            user = await AgentQq.checkUserByQq(command.Message.sender_uid);
-            if (!user) throw new Error('别捣乱QAQ');
-
             const qqGroup = await QqGroup.findQqGroup(user, command.Message.group_uid);
-            if (qqGroup) throw new Error(`我认识你，${user.AgentId}！`);
+            if (qqGroup) throw new BadCommand(`我认识你，${user.AgentId}！`, command);
 
             await QqGroup.addMemberToList(user, command.Message.group_uid);
             command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。

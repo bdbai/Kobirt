@@ -15,6 +15,7 @@ import HelpHandler from './Command/Handler/HelpHandler';
 import AccountHandler from './Command/Handler/AccountHandler';
 import ShowoffHandler from './Command/Handler/ShowoffHandler';
 import JoinGroupHandler from './Command/Handler/JoinGroupHandler';
+import L8MeetupHandler from './Command/Handler/L8MeetupHandler';
 
 // LeanCloud init
 import * as AV from 'leancloud-storage';
@@ -27,7 +28,8 @@ class Server {
             .RegisterSubHandler(new HelpHandler())
             .RegisterSubHandler(new AccountHandler())
             .RegisterSubHandler(new JoinGroupHandler())
-            .RegisterSubHandler(new ShowoffHandler());
+            .RegisterSubHandler(new ShowoffHandler())
+            .RegisterSubHandler(new L8MeetupHandler());
         return new MessageManager([
             new HelloHandler(),
             new CommandMessageHandler(commandHandler),

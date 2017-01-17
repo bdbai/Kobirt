@@ -7,25 +7,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const CommandHandlerBase_1 = require("./CommandHandlerBase");
+const LoggedinHandlerBase_1 = require("./LoggedinHandlerBase");
 const HandleResult_1 = require("../../Message/Handler/HandleResult");
-const AgentQq_1 = require("../../Ingress/AgentStats/AgentQq");
 const ShareAPI_1 = require("../../Ingress/AgentStats/ShareAPI");
 function medalCount(level, medals) {
     return medals.filter(i => i.CurrentLevel === level).length;
 }
-class ShowoffHandler extends CommandHandlerBase_1.default {
+class ShowoffHandler extends LoggedinHandlerBase_1.default {
     constructor() {
         super(...arguments);
         this.Prefix = '得瑟';
     }
-    processCommand(command) {
+    processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
             let agent;
             try {
-                const user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-                if (!user)
-                    throw new Error('你还没绑定账户呢，请给加我为好友，发私信 K 账户 绑定');
                 agent = yield ShareAPI_1.loadUserFromId(user.AgentId);
                 const title = agent.Level > 9 ? '大佬' : '特工';
                 const ms = agent.Medals;

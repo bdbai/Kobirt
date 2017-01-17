@@ -13,6 +13,7 @@ const HelpHandler_1 = require("./Command/Handler/HelpHandler");
 const AccountHandler_1 = require("./Command/Handler/AccountHandler");
 const ShowoffHandler_1 = require("./Command/Handler/ShowoffHandler");
 const JoinGroupHandler_1 = require("./Command/Handler/JoinGroupHandler");
+const L8MeetupHandler_1 = require("./Command/Handler/L8MeetupHandler");
 // LeanCloud init
 const AV = require("leancloud-storage");
 class Server {
@@ -21,7 +22,8 @@ class Server {
             .RegisterSubHandler(new HelpHandler_1.default())
             .RegisterSubHandler(new AccountHandler_1.default())
             .RegisterSubHandler(new JoinGroupHandler_1.default())
-            .RegisterSubHandler(new ShowoffHandler_1.default());
+            .RegisterSubHandler(new ShowoffHandler_1.default())
+            .RegisterSubHandler(new L8MeetupHandler_1.default());
         return new MessageManager_1.default([
             new HelloHandler_1.default(),
             new CommandMessageHandler_1.default(commandHandler),

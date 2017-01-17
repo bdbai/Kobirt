@@ -1,20 +1,15 @@
 import * as AV from 'leancloud-storage';
+import AVProperty from './AVProperty';
 import AgentQq from './AgentQq';
+import L8Meetup from './L8Meetup';
 
 export default class QqGroup extends AV.Object {
-    get Qq() {
-        return this.get('Qq');
-    }
-    set Qq(value: AgentQq) {
-        this.set('Qq', value);
-    }
 
-    get Group() {
-        return this.get('Group');
-    }
-    set Group(value: string) {
-        this.set('Group', value);
-    }
+    @AVProperty()
+    Qq: AgentQq;
+
+    @AVProperty()
+    Group: string;
 
     static async fetchMemberList(group: number) {
         const q = new AV.Query(QqGroup);
@@ -37,6 +32,10 @@ export default class QqGroup extends AV.Object {
         obj.Qq = qq;
         obj.Group = group.toString();
         return await obj.save() as QqGroup;
+    }
+    static async destroyQq(qq: AgentQq) {
+        const groups = await QqGroup.fetchJoinedGroups(qq);
+        return await AV.Object.destroyAll(groups);
     }
 }
 

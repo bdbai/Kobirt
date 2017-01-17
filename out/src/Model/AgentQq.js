@@ -1,4 +1,10 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -8,20 +14,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const AV = require("leancloud-storage");
-const ShareAPI_1 = require("./ShareAPI");
+const AVProperty_1 = require("./AVProperty");
+const QqGroup_1 = require("./QqGroup");
+const L8Meetup_1 = require("./L8Meetup");
 class AgentQq extends AV.Object {
-    get Qq() {
-        return this.get('Qq');
-    }
-    set Qq(value) {
-        this.set('Qq', value);
-    }
-    get AgentId() {
-        return this.get('AgentId');
-    }
-    set AgentId(value) {
-        this.set('AgentId', value);
-    }
     static checkUserByQq(qq) {
         return __awaiter(this, void 0, void 0, function* () {
             const q = new AV.Query(AgentQq);
@@ -38,14 +34,13 @@ class AgentQq extends AV.Object {
     }
     unbind() {
         return __awaiter(this, void 0, void 0, function* () {
+            yield QqGroup_1.default.destroyQq(this);
+            yield L8Meetup_1.default.destoryQq(this);
             return yield this.destroy();
         });
     }
     static bindUserByQq(qq, agentId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield ShareAPI_1.fetchShareFromList();
-            if (!users.find(i => i === agentId))
-                throw new Error('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？');
             const obj = new AgentQq();
             obj.Qq = qq.toString();
             obj.AgentId = agentId;
@@ -53,6 +48,12 @@ class AgentQq extends AV.Object {
         });
     }
 }
+__decorate([
+    AVProperty_1.default()
+], AgentQq.prototype, "Qq", void 0);
+__decorate([
+    AVProperty_1.default()
+], AgentQq.prototype, "AgentId", void 0);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AgentQq;
 AV.Object.register(AgentQq);

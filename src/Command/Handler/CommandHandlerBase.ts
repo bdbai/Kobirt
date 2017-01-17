@@ -2,6 +2,7 @@ import ICommandHandler from './ICommandHandler';
 import HandleResult from '../../Message/Handler/HandleResult';
 import IMessage from '../../Message/IMessage';
 import Command from '../Command';
+import BadCommand from '../Error/BadCommand';
 
 abstract class CommandHandlerBase implements ICommandHandler {
     private _subCommandHandlers = Array<ICommandHandler>();
@@ -11,7 +12,11 @@ abstract class CommandHandlerBase implements ICommandHandler {
     protected accepted = (command: Command) => command.StartsWith(this.Prefix);
 
     protected async handleError(err: Error, command: Command): Promise<HandleResult> {
-        command.Message.Reply(`出了点小问题\r\n${err.message}`);
+        if (err.constructor.name === BadCommand.name) {
+            command.Message.Reply(err.message);
+        } else {
+            command.Message.Reply(`出了点小问题\r\n${err.message}`);
+        }
         console.error(err);
         return HandleResult.Handled;
     }

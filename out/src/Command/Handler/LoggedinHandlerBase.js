@@ -9,32 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const CommandHandlerBase_1 = require("./CommandHandlerBase");
 const HandleResult_1 = require("../../Message/Handler/HandleResult");
-class HelpHandler extends CommandHandlerBase_1.default {
-    constructor() {
-        super(...arguments);
-        this.Prefix = 'help';
-    }
+const AgentQq_1 = require("../../Model/AgentQq");
+const BadCommand_1 = require("../Error/BadCommand");
+class LoggedinHandlerBase extends CommandHandlerBase_1.default {
     processCommand(command) {
         return __awaiter(this, void 0, void 0, function* () {
-            const aprefix = command.GetAccumulatedPrefix();
-            if (command.Message.group) {
-                command.Message.Reply(`Hello! 我是 Kobirt。请用指令告诉我您想做什么：
-${aprefix} help - 输出这条信息
-${aprefix} 得瑟 - 显示统计信息
-${aprefix} 诶嘿 - 参与群组排行榜
-${aprefix} 起八 - 发起/查看起八统计
-`);
+            let user;
+            try {
+                user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
+                if (!user)
+                    throw new BadCommand_1.default('你还没绑定账户呢，请给加我为好友，发私信 K 账户 绑定', command);
             }
-            else {
-                command.Message.Reply(`Kobirt 命令列表:
-${aprefix} help - 输出这条消息
-${aprefix} 得瑟 - 显示统计信息
-${aprefix} 账户 - 有关 Ingress 和 AgentStats 的绑定、查询等`);
+            catch (err) {
+                this.handleError(err, command);
+                return HandleResult_1.default.Handled;
             }
-            return HandleResult_1.default.Handled;
+            return yield this.processUserCommand(command, user);
         });
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = HelpHandler;
-//# sourceMappingURL=HelpHandler.js.map
+exports.default = LoggedinHandlerBase;
+//# sourceMappingURL=LoggedinHandlerBase.js.map

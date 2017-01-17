@@ -7,25 +7,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const CommandHandlerBase_1 = require("./CommandHandlerBase");
+const LoggedinHandlerBase_1 = require("./LoggedinHandlerBase");
 const HandleResult_1 = require("../../Message/Handler/HandleResult");
-const AgentQq_1 = require("../../Ingress/AgentStats/AgentQq");
-const QqGroup_1 = require("../../Ingress/AgentStats/QqGroup");
-class ExitGroupHandler extends CommandHandlerBase_1.default {
+const QqGroup_1 = require("../../Model/QqGroup");
+const BadCommand_1 = require("../Error/BadCommand");
+class ExitGroupHandler extends LoggedinHandlerBase_1.default {
     constructor() {
         super(...arguments);
         this.Prefix = '算了吧';
     }
-    processCommand(command) {
+    processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            let user;
             try {
-                user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-                if (!user)
-                    throw new Error('别捣乱QAQ');
                 const qqGroup = yield QqGroup_1.default.findQqGroup(user, command.Message.group_uid);
                 if (!qqGroup)
-                    throw new Error('你还没诶嘿呢');
+                    throw new BadCommand_1.default('你还没诶嘿呢', command);
                 yield qqGroup.destroy();
                 command.Message.Reply('好吧，再见朋友QAQ');
             }
@@ -35,7 +31,7 @@ class ExitGroupHandler extends CommandHandlerBase_1.default {
         });
     }
 }
-class JoinGroupHandler extends CommandHandlerBase_1.default {
+class JoinGroupHandler extends LoggedinHandlerBase_1.default {
     constructor() {
         super();
         this.Prefix = '诶嘿';
@@ -44,17 +40,13 @@ class JoinGroupHandler extends CommandHandlerBase_1.default {
         this
             .RegisterSubHandler(new ExitGroupHandler());
     }
-    processCommand(command) {
+    processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
             const thisGroup = command.Message.group_uid.toString();
-            let user;
             try {
-                user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-                if (!user)
-                    throw new Error('别捣乱QAQ');
                 const qqGroup = yield QqGroup_1.default.findQqGroup(user, command.Message.group_uid);
                 if (qqGroup)
-                    throw new Error(`我认识你，${user.AgentId}！`);
+                    throw new BadCommand_1.default(`我认识你，${user.AgentId}！`, command);
                 yield QqGroup_1.default.addMemberToList(user, command.Message.group_uid);
                 command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。
 后悔的话请说 ${command.AccumulatedPrefixes} ${this.Prefix} 算了吧`);
