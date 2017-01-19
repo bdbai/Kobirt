@@ -8,6 +8,9 @@ interface IUser {
     AP: Number,
     Level: Number,
     Medals: Array<IMedal>
+
+    CountMedals(name: string): number;
+    GetAchieveDate(name: string): string;
 }
 
 export default IUser;

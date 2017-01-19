@@ -38,6 +38,32 @@ class QqGroup extends AV.Object {
             return (yield q.first()) || null;
         });
     }
+    static fetchAgentIds() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const q = new AV.Query(QqGroup);
+            q.include('AgentQq.AgentId');
+            const all = yield q.find();
+            const distinctMap = new Map();
+            all.forEach(i => distinctMap.set(i.Qq.AgentId, true));
+            return Array.from(distinctMap.keys());
+        });
+    }
+    static fetchGroups() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const q = new AV.Query(QqGroup);
+            const all = yield q.find();
+            const distinctMap = new Map();
+            all.forEach(i => distinctMap.set(i.Group, true));
+            return Array.from(distinctMap.keys());
+        });
+    }
+    static fetchAllAgentQqs() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const q = new AV.Query(QqGroup);
+            q.include('Qq');
+            return yield q.find();
+        });
+    }
     static addMemberToList(qq, group) {
         return __awaiter(this, void 0, void 0, function* () {
             const obj = new QqGroup();

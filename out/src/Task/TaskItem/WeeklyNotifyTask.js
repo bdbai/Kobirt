@@ -7,19 +7,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const CommandHandlerBase_1 = require("./CommandHandlerBase");
-const AgentQq_1 = require("../../Model/AgentQq");
-const BadCommand_1 = require("../Error/BadCommand");
-class LoggedinHandlerBase extends CommandHandlerBase_1.default {
-    processCommand(command) {
+const QqGroup_1 = require("../../Model/QqGroup");
+const API_1 = require("../../Webqq/API");
+class WeeklyNotifyTask {
+    constructor(message) {
+        this.message = message;
+        this.Name = 'WeeklyNotify:' + this.message;
+        this.Pattern = '0 30 21 * * *';
+    }
+    DoWork() {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-            if (!user)
-                throw new BadCommand_1.default('你还没绑定账户呢，请给加我为好友，发私信 K 账户 绑定', command);
-            return yield this.processUserCommand(command, user);
+            const groups = yield QqGroup_1.default.fetchGroups();
+            groups.forEach(group => API_1.SendGroupMessage(group, this.message));
         });
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = LoggedinHandlerBase;
-//# sourceMappingURL=LoggedinHandlerBase.js.map
+exports.default = WeeklyNotifyTask;
+//# sourceMappingURL=WeeklyNotifyTask.js.map

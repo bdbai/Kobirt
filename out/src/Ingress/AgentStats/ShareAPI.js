@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const fetch = require("node-fetch");
-const User_1 = require("../User");
 const medalLevels = {
     bronze: 0, silver: 1, gold: 2, platinum: 3, black: 4
 };
@@ -23,10 +22,10 @@ function GreaterLevel(i1, i2) {
     }
     return medalLevels[i1] > medalLevels[i2] ? i1 : i2;
 }
-function loadUserFromId(agentId, startYear = '2012', startMonth = '01', startDay = '01') {
+function loadUserFromId(AgentId, startYear = '2012', startMonth = '01', startDay = '01') {
     return __awaiter(this, void 0, void 0, function* () {
         const date = new Date();
-        const response = yield fetch(`https://api.agent-stats.com/share/${agentId}/${startYear}-${startMonth}-${startDay}`, { headers: requestHeaders });
+        const response = yield fetch(`https://api.agent-stats.com/share/${AgentId}/${startYear}-${startMonth}-${startDay}`, { headers: requestHeaders });
         const result = yield response.text();
         let resultObj;
         if (result.match(/error/)) {
@@ -39,11 +38,11 @@ function loadUserFromId(agentId, startYear = '2012', startMonth = '01', startDay
             resultObj = JSON.parse(result);
             console.log(resultObj);
         }
-        const medals = Array();
+        const Medals = Array();
         let AP = 0;
         let Level = 1;
-        for (const medal in resultObj[agentId].mymedals) {
-            const thisMedal = resultObj[agentId].mymedals[medal];
+        for (const medal in resultObj[AgentId].mymedals) {
+            const thisMedal = resultObj[AgentId].mymedals[medal];
             thisMedal.name = medal;
             Object.defineProperty(thisMedal, 'CurrentLevel', {
                 get: function () {
@@ -60,11 +59,18 @@ function loadUserFromId(agentId, startYear = '2012', startMonth = '01', startDay
                 AP = thisMedal.progression.total;
                 Level = parseInt(thisMedal.CurrentLevel.replace('level ', ''));
             }
-            else {
-                medals.push(thisMedal);
-            }
+            Medals.push(thisMedal);
         }
-        return new User_1.default(agentId, medals, AP, Level);
+        function countingFunc(field) {
+            return function (name) {
+                return resultObj[AgentId][field][name];
+            };
+        }
+        return {
+            AgentId, Medals, AP, Level,
+            CountMedals: countingFunc('medals_total'),
+            GetAchieveDate: countingFunc('medals_dates')
+        };
     });
 }
 exports.loadUserFromId = loadUserFromId;

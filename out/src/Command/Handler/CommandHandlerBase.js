@@ -17,7 +17,7 @@ class CommandHandlerBase {
     }
     handleError(err, command) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (err.constructor.name === BadCommand_1.default.name) {
+            if (err instanceof BadCommand_1.default) {
                 command.Message.Reply(err.message);
             }
             else {
@@ -40,7 +40,15 @@ class CommandHandlerBase {
             const subCommand = command.GetSubCommand(this.Prefix);
             let changed = false;
             for (const subHandler of this._subCommandHandlers) {
-                switch (yield subHandler.Handle(subCommand)) {
+                let result;
+                try {
+                    result = yield subHandler.Handle(subCommand);
+                }
+                catch (err) {
+                    this.handleError(err, subCommand);
+                    return HandleResult_1.default.Handled;
+                }
+                switch (result) {
                     case HandleResult_1.default.Changed:
                         changed = true;
                         break;

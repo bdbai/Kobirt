@@ -1,6 +1,5 @@
 import * as fetch from 'node-fetch';
 import IUser from '../IUser';
-import User from '../User';
 import IMedal from '../IMedal';
 
 const medalLevels = {
@@ -20,10 +19,10 @@ function GreaterLevel(i1: string, i2: string) {
     return medalLevels[i1] > medalLevels[i2] ? i1 : i2;
 }
 
-export async function loadUserFromId(agentId: string, startYear = '2012', startMonth = '01', startDay = '01'): Promise<IUser> {
+export async function loadUserFromId(AgentId: string, startYear = '2012', startMonth = '01', startDay = '01'): Promise<IUser> {
     const date = new Date();
     const response = await fetch(
-        `https://api.agent-stats.com/share/${agentId}/${startYear}-${startMonth}-${startDay}`,
+        `https://api.agent-stats.com/share/${AgentId}/${startYear}-${startMonth}-${startDay}`,
         { headers: requestHeaders });
     const result = await response.text();
     let resultObj;
@@ -36,14 +35,14 @@ export async function loadUserFromId(agentId: string, startYear = '2012', startM
         console.log(resultObj);
     }
 
-    const medals = Array<IMedal>();
+    const Medals = Array<IMedal>();
     let AP = 0;
     let Level = 1;
-    for (const medal in resultObj[agentId].mymedals) {
-        const thisMedal = resultObj[agentId].mymedals[medal] as IMedal;
+    for (const medal in resultObj[AgentId].mymedals) {
+        const thisMedal = resultObj[AgentId].mymedals[medal] as IMedal;
         thisMedal.name = medal;
         Object.defineProperty(thisMedal, 'CurrentLevel', {
-            get: function() {
+            get: function () {
                 let lastLevel = 'unacquired';
                 for (const level in this.date) {
                     if (this.date[level] === 1) {
@@ -56,12 +55,21 @@ export async function loadUserFromId(agentId: string, startYear = '2012', startM
         if (medal === 'ap') {
             AP = thisMedal.progression.total;
             Level = parseInt(thisMedal.CurrentLevel.replace('level ', ''));
-        } else {
-            medals.push(thisMedal);
+        }
+        Medals.push(thisMedal);
+    }
+
+    function countingFunc(field: string) {
+        return function (name: string) {
+            return resultObj[AgentId][field][name];
         }
     }
 
-    return new User(agentId, medals, AP, Level);
+    return {
+        AgentId, Medals, AP, Level,
+        CountMedals: countingFunc('medals_total'),
+        GetAchieveDate: countingFunc('medals_dates')
+    } as IUser;
 }
 
 export async function fetchShareFromList() {

@@ -17,8 +17,15 @@ import ShowoffHandler from './Command/Handler/ShowoffHandler';
 import JoinGroupHandler from './Command/Handler/JoinGroupHandler';
 import L8MeetupHandler from './Command/Handler/L8MeetupHandler';
 
-// LeanCloud init
+// Scheduled tasks
+import ITaskManager from './Task/Manager/ITaskManager';
+import TaskManager from './Task/Manager/TaskManager';
+import WeeklyNotifyTask from './Task/TaskItem/WeeklyNotifyTask';
+import WeeklySumupTask from './Task/TaskItem/WeeklySumupTask';
+
+// services init
 import * as AV from 'leancloud-storage';
+import * as qiniu from 'qiniu';
 
 class Server {
 
@@ -43,6 +50,13 @@ class Server {
             appId: process.env.LeanAppId,
             appKey: process.env.LeanAppKey
         });
+        qiniu.conf.ACCESS_KEY = process.env.QiniuAK;
+        qiniu.conf.SECRET_KEY = process.env.QiniuSK;
+
+        const taskManager: ITaskManager = new TaskManager(
+            new WeeklyNotifyTask('马上开始统计本周进度了，赶快更新 AgentStats 资料吧！'),
+            new WeeklySumupTask()
+        );
 
         const app = express();
         app.use(bodyParser.json());

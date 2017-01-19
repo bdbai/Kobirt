@@ -19,15 +19,10 @@ class WhoAmIHandler extends CommandHandlerBase_1.default {
     }
     processCommand(command) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-                if (!user)
-                    throw new BadCommand_1.default('我好像不认识你诶。请先用指令绑定你的游戏 ID。', command);
-                command.Message.Reply(`啊哈！你就是特工 ${user.AgentId} ！`);
-            }
-            catch (err) {
-                this.handleError(err, command);
-            }
+            const user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
+            if (!user)
+                throw new BadCommand_1.default('我好像不认识你诶。请先用指令绑定你的游戏 ID。', command);
+            command.Message.Reply(`啊哈！你就是特工 ${user.AgentId} ！`);
             return HandleResult_1.default.Handled;
         });
     }
@@ -46,22 +41,17 @@ class BindHandler extends CommandHandlerBase_1.default {
 2. 给我发指令 ${command.GetAccumulatedPrefix()} ${this.Prefix} 加你的 ID`);
                 return HandleResult_1.default.Handled;
             }
-            try {
-                const userByQQ = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-                if (userByQQ)
-                    throw new BadCommand_1.default('已经绑定过了哟', command);
-                const userById = yield AgentQq_1.default.checkUserByAgentId(id);
-                if (userById)
-                    throw new BadCommand_1.default('不行哦~', command);
-                const knownUsers = yield ShareAPI_1.fetchShareFromList();
-                if (!knownUsers.find(i => i === id))
-                    throw new BadCommand_1.default('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？', command);
-                const agentQq = yield AgentQq_1.default.bindUserByQq(command.Message.sender_uid, id);
-                command.Message.Reply('绑定完成！接下来请到群中发指令 K 诶嘿 参与该群特工排行榜');
-            }
-            catch (err) {
-                this.handleError(err, command);
-            }
+            const userByQQ = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
+            if (userByQQ)
+                throw new BadCommand_1.default('已经绑定过了哟', command);
+            const userById = yield AgentQq_1.default.checkUserByAgentId(id);
+            if (userById)
+                throw new BadCommand_1.default('不行哦~', command);
+            const knownUsers = yield ShareAPI_1.fetchShareFromList();
+            if (!knownUsers.find(i => i === id))
+                throw new BadCommand_1.default('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？', command);
+            const agentQq = yield AgentQq_1.default.bindUserByQq(command.Message.sender_uid, id);
+            command.Message.Reply('绑定完成！接下来请到群中发指令 K 诶嘿 参与该群特工排行榜');
             return HandleResult_1.default.Handled;
         });
     }
@@ -73,16 +63,11 @@ class UnbindHandler extends CommandHandlerBase_1.default {
     }
     processCommand(command) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const userByQQ = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-                if (!userByQQ)
-                    throw new BadCommand_1.default('你还没绑定呢', command);
-                yield userByQQ.unbind();
-                command.Message.Reply('再见QAQ\r\n记得到 AgentStats 网站取消分享哦~');
-            }
-            catch (err) {
-                this.handleError(err, command);
-            }
+            const userByQQ = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
+            if (!userByQQ)
+                throw new BadCommand_1.default('你还没绑定呢', command);
+            yield userByQQ.unbind();
+            command.Message.Reply('再见QAQ\r\n记得到 AgentStats 网站取消分享哦~');
             return HandleResult_1.default.Handled;
         });
     }

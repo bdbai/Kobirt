@@ -12,7 +12,7 @@ abstract class CommandHandlerBase implements ICommandHandler {
     protected accepted = (command: Command) => command.StartsWith(this.Prefix);
 
     protected async handleError(err: Error, command: Command): Promise<HandleResult> {
-        if (err.constructor.name === BadCommand.name) {
+        if (err instanceof BadCommand) {
             command.Message.Reply(err.message);
         } else {
             command.Message.Reply(`出了点小问题\r\n${err.message}`);
@@ -33,7 +33,14 @@ abstract class CommandHandlerBase implements ICommandHandler {
         const subCommand = command.GetSubCommand(this.Prefix);
         let changed = false;
         for (const subHandler of this._subCommandHandlers) {
-            switch (await subHandler.Handle(subCommand)) {
+            let result: HandleResult;
+            try {
+                result = await subHandler.Handle(subCommand);
+            } catch (err) {
+                this.handleError(err, subCommand);
+                return HandleResult.Handled;
+            }
+            switch (result) {
                 case HandleResult.Changed:
                     changed = true;
                     break;

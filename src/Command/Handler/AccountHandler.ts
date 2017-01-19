@@ -9,13 +9,10 @@ class WhoAmIHandler extends CommandHandlerBase {
     public Prefix = '我是谁';
 
     public async processCommand(command: Command): Promise<HandleResult> {
-        try {
-            const user = await AgentQq.checkUserByQq(command.Message.sender_uid);
-            if (!user) throw new BadCommand('我好像不认识你诶。请先用指令绑定你的游戏 ID。', command);
-            command.Message.Reply(`啊哈！你就是特工 ${user.AgentId} ！`);
-        } catch (err) {
-            this.handleError(err, command);
-        }
+        const user = await AgentQq.checkUserByQq(command.Message.sender_uid);
+        if (!user) throw new BadCommand('我好像不认识你诶。请先用指令绑定你的游戏 ID。', command);
+
+        command.Message.Reply(`啊哈！你就是特工 ${user.AgentId} ！`);
         return HandleResult.Handled;
     }
 }
@@ -31,21 +28,18 @@ class BindHandler extends CommandHandlerBase {
 2. 给我发指令 ${command.GetAccumulatedPrefix()} ${this.Prefix} 加你的 ID`);
             return HandleResult.Handled;
         }
-        try {
-            const userByQQ = await AgentQq.checkUserByQq(command.Message.sender_uid);
-            if (userByQQ) throw new BadCommand('已经绑定过了哟', command);
 
-            const userById = await AgentQq.checkUserByAgentId(id);
-            if (userById) throw new BadCommand('不行哦~', command);
+        const userByQQ = await AgentQq.checkUserByQq(command.Message.sender_uid);
+        if (userByQQ) throw new BadCommand('已经绑定过了哟', command);
 
-            const knownUsers = await fetchShareFromList();
-            if (!knownUsers.find(i => i === id)) throw new BadCommand('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？', command);
-        
-            const agentQq = await AgentQq.bindUserByQq(command.Message.sender_uid, id);
-            command.Message.Reply('绑定完成！接下来请到群中发指令 K 诶嘿 参与该群特工排行榜')
-        } catch (err) {
-            this.handleError(err, command);
-        }
+        const userById = await AgentQq.checkUserByAgentId(id);
+        if (userById) throw new BadCommand('不行哦~', command);
+
+        const knownUsers = await fetchShareFromList();
+        if (!knownUsers.find(i => i === id)) throw new BadCommand('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？', command);
+
+        const agentQq = await AgentQq.bindUserByQq(command.Message.sender_uid, id);
+        command.Message.Reply('绑定完成！接下来请到群中发指令 K 诶嘿 参与该群特工排行榜')
         return HandleResult.Handled;
     }
 }
@@ -54,15 +48,11 @@ class UnbindHandler extends CommandHandlerBase {
     public Prefix = '注销';
 
     public async processCommand(command: Command): Promise<HandleResult> {
-        try {
-            const userByQQ = await AgentQq.checkUserByQq(command.Message.sender_uid);
-            if (!userByQQ) throw new BadCommand('你还没绑定呢', command);
+        const userByQQ = await AgentQq.checkUserByQq(command.Message.sender_uid);
+        if (!userByQQ) throw new BadCommand('你还没绑定呢', command);
 
-            await userByQQ.unbind();
-            command.Message.Reply('再见QAQ\r\n记得到 AgentStats 网站取消分享哦~');
-        } catch (err) {
-            this.handleError(err, command);
-        }
+        await userByQQ.unbind();
+        command.Message.Reply('再见QAQ\r\n记得到 AgentStats 网站取消分享哦~');
         return HandleResult.Handled;
     }
 }
@@ -70,7 +60,7 @@ class UnbindHandler extends CommandHandlerBase {
 export default class AccountHandler extends CommandHandlerBase {
     public Prefix = '账户';
 
-    public accepted = (command: Command) => 
+    public accepted = (command: Command) =>
         command.StartsWith(this.Prefix) &&
         !command.Message.group;
 
@@ -85,7 +75,7 @@ export default class AccountHandler extends CommandHandlerBase {
     public async processCommand(command: Command): Promise<HandleResult> {
         const aprefix = command.GetAccumulatedPrefix() + ' ' + this.Prefix;
         command.Message.Reply(
-`${aprefix} 我是谁 - 输出已经绑定的特工 ID
+            `${aprefix} 我是谁 - 输出已经绑定的特工 ID
 ${aprefix} 绑定 - 绑定 AgentStats
 ${aprefix} 注销 - 解除绑定 AgentStats`);
         return HandleResult.Handled;

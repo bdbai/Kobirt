@@ -18,17 +18,12 @@ class DoneHandler extends LoggedinHandlerBase_1.default {
     }
     processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const meetups = yield L8Meetup_1.default.fetchFromGroup(command.Message.group_uid);
-                if (meetups.length === 0)
-                    throw new BadCommand_1.default('咱能先起八不', command);
-                command.Message.Reply(`起八完成！${meetups.length < 8 ? '人不够，毒来凑！' : '嘿嘿~'}参与人员：
+            const meetups = yield L8Meetup_1.default.fetchFromGroup(command.Message.group_uid);
+            if (meetups.length === 0)
+                throw new BadCommand_1.default('咱能先起八不', command);
+            command.Message.Reply(`起八完成！${meetups.length < 8 ? '人不够，毒来凑！' : '嘿嘿~'}参与人员：
 ${meetups.map(i => '@' + i.AgentQq.AgentId).join('\r\n')}`);
-                yield L8Meetup_1.default.destroyAll(meetups);
-            }
-            catch (err) {
-                this.handleError(err, command);
-            }
+            yield L8Meetup_1.default.destroyAll(meetups);
             return HandleResult_1.default.Handled;
         });
     }
@@ -42,18 +37,13 @@ class ExitHandler extends LoggedinHandlerBase_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             const group_uid = command.Message.group_uid;
             const group = group_uid.toString();
-            try {
-                const meetups = yield L8Meetup_1.default.fetchFromQq(user);
-                const thisMeetup = meetups.find(i => i.Group === group);
-                if (!thisMeetup) {
-                    throw new BadCommand_1.default(`别捣乱，${user.AgentId}！`, command);
-                }
-                yield thisMeetup.destroy();
-                command.Message.Reply(`啊呀，${user.AgentId} 不来了！`);
+            const meetups = yield L8Meetup_1.default.fetchFromQq(user);
+            const thisMeetup = meetups.find(i => i.Group === group);
+            if (!thisMeetup) {
+                throw new BadCommand_1.default(`别捣乱，${user.AgentId}！`, command);
             }
-            catch (err) {
-                this.handleError(err, command);
-            }
+            yield thisMeetup.destroy();
+            command.Message.Reply(`啊呀，${user.AgentId} 不来了！`);
             return HandleResult_1.default.Handled;
         });
     }
@@ -67,17 +57,12 @@ class AddHandler extends LoggedinHandlerBase_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             const group_uid = command.Message.group_uid;
             const group = group_uid.toString();
-            try {
-                const meetups = yield L8Meetup_1.default.fetchFromQq(user);
-                if (meetups.find(i => i.Group === group)) {
-                    throw new BadCommand_1.default(`已经带上 ${user.AgentId} 啦`, command);
-                }
-                yield L8Meetup_1.default.addQqToMeetup(user, group_uid);
-                command.Message.Reply(`好的，一定带上 ${user.AgentId}！`);
+            const meetups = yield L8Meetup_1.default.fetchFromQq(user);
+            if (meetups.find(i => i.Group === group)) {
+                throw new BadCommand_1.default(`已经带上 ${user.AgentId} 啦`, command);
             }
-            catch (err) {
-                this.handleError(err, command);
-            }
+            yield L8Meetup_1.default.addQqToMeetup(user, group_uid);
+            command.Message.Reply(`好的，一定带上 ${user.AgentId}！`);
             return HandleResult_1.default.Handled;
         });
     }
@@ -99,23 +84,18 @@ ${aprefix} 耶 - 完成起八`;
     }
     processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const meetups = yield L8Meetup_1.default.fetchFromGroup(command.Message.group_uid);
-                if (meetups.length > 0) {
-                    // Display this L8Meetup
-                    const len = meetups.length;
-                    command.Message.Reply(`起八状态：人${len >= 8 ? '齐了' : '没齐'}（${len}/8）
+            const meetups = yield L8Meetup_1.default.fetchFromGroup(command.Message.group_uid);
+            if (meetups.length > 0) {
+                // Display this L8Meetup
+                const len = meetups.length;
+                command.Message.Reply(`起八状态：人${len >= 8 ? '齐了' : '没齐'}（${len}/8）
 ${meetups.map(i => '@' + i.AgentQq.AgentId).join('\r\n')}
 ${this.tips(`${command.GetAccumulatedPrefix()} ${this.Prefix}`)}`);
-                }
-                else {
-                    // Create a new L8Meetup
-                    yield L8Meetup_1.default.addQqToMeetup(user, command.Message.group_uid);
-                    command.Message.Reply(`${user.AgentId} 发起了起八！其他人可以发${this.tips(`${command.GetAccumulatedPrefix()} ${this.Prefix}`)}`);
-                }
             }
-            catch (err) {
-                this.handleError(err, command);
+            else {
+                // Create a new L8Meetup
+                yield L8Meetup_1.default.addQqToMeetup(user, command.Message.group_uid);
+                command.Message.Reply(`${user.AgentId} 发起了起八！其他人可以发${this.tips(`${command.GetAccumulatedPrefix()} ${this.Prefix}`)}`);
             }
             return HandleResult_1.default.Handled;
         });

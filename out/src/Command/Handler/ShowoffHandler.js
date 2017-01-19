@@ -10,9 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const LoggedinHandlerBase_1 = require("./LoggedinHandlerBase");
 const HandleResult_1 = require("../../Message/Handler/HandleResult");
 const ShareAPI_1 = require("../../Ingress/AgentStats/ShareAPI");
-function medalCount(level, medals) {
-    return medals.filter(i => i.CurrentLevel === level).length;
-}
 class ShowoffHandler extends LoggedinHandlerBase_1.default {
     constructor() {
         super(...arguments);
@@ -20,17 +17,14 @@ class ShowoffHandler extends LoggedinHandlerBase_1.default {
     }
     processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            let agent;
-            try {
-                agent = yield ShareAPI_1.loadUserFromId(user.AgentId);
-                const title = agent.Level > 9 ? '大佬' : '特工';
-                const ms = agent.Medals;
-                command.Message.Reply(`${title} ${agent.AgentId} 当前 ${agent.Level} 级，共有勋章 ${medalCount('bronze', ms)} 铜，${medalCount('silver', ms)} 银，${medalCount('gold', ms)} 金， ${medalCount('platinum', ms)} 白金， ${medalCount('black', ms)} 黑。\r\n
-包含部分不再颁发的勋章。`);
-            }
-            catch (err) {
-                this.handleError(err, command);
-            }
+            const agent = yield ShareAPI_1.loadUserFromId(user.AgentId);
+            const title = agent.Level > 9 ? '大佬' : '特工';
+            command.Message.Reply(`${title} ${agent.AgentId} 当前 ${agent.Level} 级，共有勋章 ` +
+                `${agent.CountMedals('bronze')} 铜，` +
+                `${agent.CountMedals('silver')} 银，` +
+                `${agent.CountMedals('gold')} 金，` +
+                `${agent.CountMedals('platinum')} 铂，` +
+                `${agent.CountMedals('black')} 黑。`);
             return HandleResult_1.default.Handled;
         });
     }

@@ -27,6 +27,26 @@ export default class QqGroup extends AV.Object {
         q.equalTo('Group', group.toString());
         return await q.first() as QqGroup || null;
     }
+    static async fetchAgentIds(): Promise<Array<string>> {
+        const q = new AV.Query(QqGroup);
+        q.include('AgentQq.AgentId');
+        const all = await q.find() as Array<QqGroup>;
+        const distinctMap = new Map<string, boolean>();
+        all.forEach(i => distinctMap.set(i.Qq.AgentId, true));
+        return Array.from(distinctMap.keys());
+    }
+    static async fetchGroups(): Promise<Array<string>> {
+        const q = new AV.Query(QqGroup);
+        const all = await q.find() as Array<QqGroup>;
+        const distinctMap = new Map<string, boolean>();
+        all.forEach(i => distinctMap.set(i.Group, true));
+        return Array.from(distinctMap.keys());
+    }
+    static async fetchAllAgentQqs(): Promise<Array<QqGroup>> {
+        const q = new AV.Query(QqGroup);
+        q.include('Qq');
+        return await q.find() as Array<QqGroup>;
+    }
     static async addMemberToList(qq: AgentQq, group: number) {
         const obj = new QqGroup();
         obj.Qq = qq;

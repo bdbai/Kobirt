@@ -18,16 +18,12 @@ class ExitGroupHandler extends LoggedinHandlerBase_1.default {
     }
     processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const qqGroup = yield QqGroup_1.default.findQqGroup(user, command.Message.group_uid);
-                if (!qqGroup)
-                    throw new BadCommand_1.default('你还没诶嘿呢', command);
-                yield qqGroup.destroy();
-                command.Message.Reply('好吧，再见朋友QAQ');
-            }
-            catch (err) {
-                return this.handleError(err, command);
-            }
+            const qqGroup = yield QqGroup_1.default.findQqGroup(user, command.Message.group_uid);
+            if (!qqGroup)
+                throw new BadCommand_1.default('你还没诶嘿呢', command);
+            yield qqGroup.destroy();
+            command.Message.Reply('好吧，再见朋友QAQ');
+            return HandleResult_1.default.Handled;
         });
     }
 }
@@ -43,17 +39,12 @@ class JoinGroupHandler extends LoggedinHandlerBase_1.default {
     processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
             const thisGroup = command.Message.group_uid.toString();
-            try {
-                const qqGroup = yield QqGroup_1.default.findQqGroup(user, command.Message.group_uid);
-                if (qqGroup)
-                    throw new BadCommand_1.default(`我认识你，${user.AgentId}！`, command);
-                yield QqGroup_1.default.addMemberToList(user, command.Message.group_uid);
-                command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。
+            const qqGroup = yield QqGroup_1.default.findQqGroup(user, command.Message.group_uid);
+            if (qqGroup)
+                throw new BadCommand_1.default(`我认识你，${user.AgentId}！`, command);
+            yield QqGroup_1.default.addMemberToList(user, command.Message.group_uid);
+            command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。
 后悔的话请说 ${command.AccumulatedPrefixes} ${this.Prefix} 算了吧`);
-            }
-            catch (err) {
-                return this.handleError(err, command);
-            }
             return HandleResult_1.default.Handled;
         });
     }

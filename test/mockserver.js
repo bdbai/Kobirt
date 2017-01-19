@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+'use strict';
 const commander = require('commander');
 const fetch = require('node-fetch');
 

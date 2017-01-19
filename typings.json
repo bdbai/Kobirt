@@ -6,6 +6,7 @@
   },
   "globalDependencies": {
     "node": "registry:dt/node#6.0.0+20161110151007",
-    "node-fetch": "registry:dt/node-fetch#0.0.0+20160711094047"
+    "node-fetch": "registry:dt/node-fetch#0.0.0+20160711094047",
+    "node-schedule": "registry:dt/node-schedule#1.1.0+20161119044246"
   }
 }
