@@ -19,11 +19,12 @@ class CommandHandlerBase {
         return __awaiter(this, void 0, void 0, function* () {
             if (err instanceof BadCommand_1.default) {
                 command.Message.Reply(err.message);
+                console.log(err);
             }
             else {
                 command.Message.Reply(`出了点小问题\r\n${err.message}`);
+                console.error(err);
             }
-            console.error(err);
             return HandleResult_1.default.Handled;
         });
     }

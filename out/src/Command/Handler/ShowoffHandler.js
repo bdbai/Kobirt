@@ -18,6 +18,11 @@ class ShowoffHandler extends LoggedinHandlerBase_1.default {
     processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {
             const agent = yield ShareAPI_1.loadUserFromId(user.AgentId);
+            if (isNaN(agent.Level)) {
+                command.Message.Reply(`${agent.AgentId} 还没有上传数据哦~
+请到 www.agent-stats.com 下载应用并上传特工信息`);
+                return HandleResult_1.default.Handled;
+            }
             const title = agent.Level > 9 ? '大佬' : '特工';
             command.Message.Reply(`${title} ${agent.AgentId} 当前 ${agent.Level} 级，共有勋章 ` +
                 `${agent.CountMedals('bronze')} 铜，` +

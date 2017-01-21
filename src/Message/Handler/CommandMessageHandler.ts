@@ -9,7 +9,7 @@ class CommandMessageHandler implements IMessageHandler {
     constructor(private handler: ICommandHandler) { }
 
     public async Handle(message: IMessage): Promise<HandleResult> {
-        const command = new Command(message.content, message);
+        const command = new Command(message.content.trim(), message);
         return this.handler.Handle(command);
     }
 }

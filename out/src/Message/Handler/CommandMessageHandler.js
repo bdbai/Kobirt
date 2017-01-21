@@ -14,7 +14,7 @@ class CommandMessageHandler {
     }
     Handle(message) {
         return __awaiter(this, void 0, void 0, function* () {
-            const command = new Command_1.default(message.content, message);
+            const command = new Command_1.default(message.content.trim(), message);
             return this.handler.Handle(command);
         });
     }

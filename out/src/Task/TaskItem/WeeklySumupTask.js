@@ -13,7 +13,7 @@ const API_1 = require("../../Webqq/API");
 class WeeklySumupTask {
     constructor() {
         this.Name = '每周统计';
-        this.Pattern = '0 38 22 * * *';
+        this.Pattern = '0 0 21 * * 0';
     }
     processGroup(groupUid, qqs, agents) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,9 +35,9 @@ class WeeklySumupTask {
                     }
                 });
             }
-            data.sort((a, b) => a.data.week - b.data.week);
+            data.sort((a, b) => b.data.week - a.data.week);
             API_1.SendGroupMessage(groupUid, '本周特工ap排行榜：\r\n' +
-                data.map(i => `@${i.name}} ${i.data.week}` + '\r\n'));
+                data.map(i => `@${i.name} ${i.data.week}`).join('\r\n'));
         });
     }
     DoWork() {

@@ -39,10 +39,10 @@ export default class WeeklySumupTask implements ITask {
             }});
         }
 
-        data.sort((a, b) => a.data.week - b.data.week);
+        data.sort((a, b) => b.data.week - a.data.week);
 
         SendGroupMessage(groupUid, '本周特工ap排行榜：\r\n' +
-            data.map(i => `@${i.name}} ${i.data.week}` + '\r\n'));
+            data.map(i => `@${i.name} ${i.data.week}`).join('\r\n'));
     }
 
     public async DoWork() {

@@ -17,8 +17,8 @@ export interface IMedal {
     name: string,
     CurrentLevel: string,
     progression: Progression,
-    date: MedalColorProperty<Number>;
-    miss: MedalColorProperty<Number>;
+    date: MedalColorProperty<number>;
+    miss: MedalColorProperty<number>;
 }
 
 export default IMedal;

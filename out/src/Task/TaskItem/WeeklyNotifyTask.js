@@ -13,7 +13,7 @@ class WeeklyNotifyTask {
     constructor(message) {
         this.message = message;
         this.Name = 'WeeklyNotify:' + this.message;
-        this.Pattern = '0 30 21 * * *';
+        this.Pattern = '0 0 20 * * 0';
     }
     DoWork() {
         return __awaiter(this, void 0, void 0, function* () {

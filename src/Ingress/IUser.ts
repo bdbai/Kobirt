@@ -5,8 +5,8 @@ interface IUser {
     AgentId: string,
 
     // Faction: Faction,
-    AP: Number,
-    Level: Number,
+    AP: number,
+    Level: number,
     Medals: Array<IMedal>
 
     CountMedals(name: string): number;

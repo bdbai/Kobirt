@@ -41,10 +41,11 @@ class JoinGroupHandler extends LoggedinHandlerBase_1.default {
             const thisGroup = command.Message.group_uid.toString();
             const qqGroup = yield QqGroup_1.default.findQqGroup(user, command.Message.group_uid);
             if (qqGroup)
-                throw new BadCommand_1.default(`我认识你，${user.AgentId}！`, command);
+                throw new BadCommand_1.default(`我认识你，${user.AgentId}！
+退出排行榜请说 ${command.GetAccumulatedPrefix()} ${this.Prefix} 算了吧`, command);
             yield QqGroup_1.default.addMemberToList(user, command.Message.group_uid);
             command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。
-后悔的话请说 ${command.AccumulatedPrefixes} ${this.Prefix} 算了吧`);
+后悔的话请说 ${command.GetAccumulatedPrefix()} ${this.Prefix} 算了吧`);
             return HandleResult_1.default.Handled;
         });
     }

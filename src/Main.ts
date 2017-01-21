@@ -45,7 +45,7 @@ class Server {
         ]);
     }
 
-    public static Main(): Number {
+    public static Main(): number {
         AV.init({
             appId: process.env.LeanAppId,
             appKey: process.env.LeanAppKey
