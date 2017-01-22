@@ -18,7 +18,7 @@ class CommandHandlerBase {
     handleError(err, command) {
         return __awaiter(this, void 0, void 0, function* () {
             if (err instanceof BadCommand_1.default) {
-                command.Message.Reply(err.message);
+                command.Message.Reply(err.message || 'WTF?');
                 console.log(err);
             }
             else {

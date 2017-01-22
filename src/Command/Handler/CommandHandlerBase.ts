@@ -13,7 +13,7 @@ abstract class CommandHandlerBase implements ICommandHandler {
 
     protected async handleError(err: Error, command: Command): Promise<HandleResult> {
         if (err instanceof BadCommand) {
-            command.Message.Reply(err.message);
+            command.Message.Reply(err.message || 'WTF?');
             console.log(err);
         } else {
             command.Message.Reply(`出了点小问题\r\n${err.message}`);
