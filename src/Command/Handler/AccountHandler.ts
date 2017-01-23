@@ -71,7 +71,7 @@ export default class AccountHandler extends CommandHandlerBase {
     }
 
     public async processCommand(command: Command): Promise<HandleResult> {
-        const aprefix = command.GetAccumulatedPrefix() + ' ' + this.Prefix;
+        const aprefix = command.GetAccumulatedPrefix() + ' ' + command.GetCurrentContent();
         command.Message.Reply(
             `${aprefix} 我是谁 - 输出已经绑定的特工 ID
 ${aprefix} 绑定 - 绑定 AgentStats

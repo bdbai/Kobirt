@@ -23,6 +23,9 @@ export default class Command {
             return this;
         }
     }
+    public GetCurrentContent() {
+        return this.Content.split(' ')[0];
+    }
     public GetAccumulatedPrefix() {
         return this.AccumulatedPrefixes.join(' ');
     }

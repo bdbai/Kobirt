@@ -17,6 +17,9 @@ class Command {
             return this;
         }
     }
+    GetCurrentContent() {
+        return this.Content.split(' ')[0];
+    }
     GetAccumulatedPrefix() {
         return this.AccumulatedPrefixes.join(' ');
     }
