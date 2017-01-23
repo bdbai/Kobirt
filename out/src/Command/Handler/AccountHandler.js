@@ -75,9 +75,8 @@ class UnbindHandler extends CommandHandlerBase_1.default {
 class AccountHandler extends CommandHandlerBase_1.default {
     constructor() {
         super();
-        this.Prefix = '账户';
-        this.accepted = (command) => command.StartsWith(this.Prefix) &&
-            !command.Message.group;
+        this.Prefix = ['账户', '帐户'];
+        this.acceptGroupMessage = false;
         this
             .RegisterSubHandler(new WhoAmIHandler())
             .RegisterSubHandler(new BindHandler())

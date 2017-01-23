@@ -7,9 +7,23 @@ import BadCommand from '../Error/BadCommand';
 abstract class CommandHandlerBase implements ICommandHandler {
     private _subCommandHandlers = Array<ICommandHandler>();
 
-    abstract Prefix = '';
+    protected Prefix: string | Array<string> = '';
 
-    protected accepted = (command: Command) => command.StartsWith(this.Prefix);
+    protected acceptGroupMessage: boolean = true;
+
+    protected acceptFriendMessage: boolean = true;
+
+    protected accepted = (command: Command) =>
+        (
+            (command.Message.type === 'friend_message' && this.acceptFriendMessage) ||
+            (command.Message.type === 'group_message' && this.acceptGroupMessage)
+        ) && (
+            typeof this.Prefix === 'string' ?
+            command.StartsWith(this.Prefix) :
+            this.Prefix instanceof Array ?
+                !!this.Prefix.find(i => command.StartsWith(i)) :
+                false
+        );
 
     protected async handleError(err: Error, command: Command): Promise<HandleResult> {
         if (err instanceof BadCommand) {
@@ -31,7 +45,13 @@ abstract class CommandHandlerBase implements ICommandHandler {
             return HandleResult.Skipped;
         }
 
-        const subCommand = command.GetSubCommand(this.Prefix);
+        const subCommand = command.GetSubCommand(
+            typeof this.Prefix === 'string' ?
+                this.Prefix :
+                this.Prefix instanceof Array ?
+                    this.Prefix.find(i => command.StartsWith(i)):
+                    '');
+
         let changed = false;
         for (const subHandler of this._subCommandHandlers) {
             let result: HandleResult;
@@ -56,7 +76,7 @@ abstract class CommandHandlerBase implements ICommandHandler {
     }
 
     public RegisterSubHandler(subCommand: ICommandHandler): ICommandHandler {
-        this._subCommandHandlers.unshift(subCommand);
+        this._subCommandHandlers.push(subCommand);
         return this;
     }
 }

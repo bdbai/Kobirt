@@ -20,11 +20,9 @@ class ExitGroupHandler extends LoggedinHandlerBase {
 }
 
 export default class JoinGroupHandler extends LoggedinHandlerBase {
-    public Prefix = '诶嘿';
+    public Prefix = [ '诶嘿', '哎嘿', '唉嘿', '欸嘿' ];
 
-    public accepted = (command: Command) =>
-        command.StartsWith(this.Prefix) &&
-        !!command.Message.group;
+    protected acceptFriendMessage = false;
 
     public async processUserCommand(command: Command, user: AgentQq): Promise<HandleResult> {
         const thisGroup = command.Message.group_uid.toString();

@@ -19,3 +19,6 @@ export LeanAppKey=''
 # export QiniuAK=''
 # export QiniuSK=''
 # export QiniuBucket=''
+
+# Stupid words JSON file location
+export StupidWordsFile=$PWD/words.sample.json

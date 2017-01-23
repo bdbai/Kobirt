@@ -65,11 +65,9 @@ ${aprefix} 带上我 - 加入起八
 ${aprefix} 算了吧 - 退出起八
 ${aprefix} 耶 - 完成起八`;
 
-    public Prefix = '起八';
+    public Prefix = [ '起八', '起七', '起九' ];
 
-    public accepted = (command: Command) =>
-        command.StartsWith(this.Prefix) &&
-        !!command.Message.group;
+    protected acceptFriendMessage = false;
 
     public async processUserCommand(command: Command, user: AgentQq) {
         const meetups = await L8Meetup.fetchFromGroup(command.Message.group_uid);

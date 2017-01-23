@@ -58,11 +58,9 @@ class UnbindHandler extends CommandHandlerBase {
 }
 
 export default class AccountHandler extends CommandHandlerBase {
-    public Prefix = '账户';
+    public Prefix = [ '账户', '帐户' ];
 
-    public accepted = (command: Command) =>
-        command.StartsWith(this.Prefix) &&
-        !command.Message.group;
+    protected acceptGroupMessage = false;
 
     constructor() {
         super();

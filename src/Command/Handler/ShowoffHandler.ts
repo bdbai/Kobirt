@@ -8,12 +8,7 @@ import { loadUserFromId } from '../../Ingress/AgentStats/ShareAPI';
 import BadCommand from '../Error/BadCommand';
 
 export default class ShowoffHandler extends LoggedinHandlerBase {
-    // Not useful
-    public Prefix = '';
-
-    public accepted = (command: Command) =>
-        command.StartsWith('得瑟') ||
-        command.StartsWith('嘚瑟');
+    public Prefix = [ '得瑟', '嘚瑟' ];
 
     public async processUserCommand(command: Command, user: AgentQq): Promise<HandleResult> {
         const agent = await loadUserFromId(user.AgentId);

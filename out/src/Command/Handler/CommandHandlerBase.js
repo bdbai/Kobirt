@@ -13,7 +13,14 @@ class CommandHandlerBase {
     constructor() {
         this._subCommandHandlers = Array();
         this.Prefix = '';
-        this.accepted = (command) => command.StartsWith(this.Prefix);
+        this.acceptGroupMessage = true;
+        this.acceptFriendMessage = true;
+        this.accepted = (command) => ((command.Message.type === 'friend_message' && this.acceptFriendMessage) ||
+            (command.Message.type === 'group_message' && this.acceptGroupMessage)) && (typeof this.Prefix === 'string' ?
+            command.StartsWith(this.Prefix) :
+            this.Prefix instanceof Array ?
+                !!this.Prefix.find(i => command.StartsWith(i)) :
+                false);
     }
     handleError(err, command) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -38,7 +45,11 @@ class CommandHandlerBase {
             if (!this.accepted(command)) {
                 return HandleResult_1.default.Skipped;
             }
-            const subCommand = command.GetSubCommand(this.Prefix);
+            const subCommand = command.GetSubCommand(typeof this.Prefix === 'string' ?
+                this.Prefix :
+                this.Prefix instanceof Array ?
+                    this.Prefix.find(i => command.StartsWith(i)) :
+                    '');
             let changed = false;
             for (const subHandler of this._subCommandHandlers) {
                 let result;
@@ -62,7 +73,7 @@ class CommandHandlerBase {
         });
     }
     RegisterSubHandler(subCommand) {
-        this._subCommandHandlers.unshift(subCommand);
+        this._subCommandHandlers.push(subCommand);
         return this;
     }
 }

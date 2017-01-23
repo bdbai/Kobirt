@@ -16,6 +16,7 @@ import AccountHandler from './Command/Handler/AccountHandler';
 import ShowoffHandler from './Command/Handler/ShowoffHandler';
 import JoinGroupHandler from './Command/Handler/JoinGroupHandler';
 import L8MeetupHandler from './Command/Handler/L8MeetupHandler';
+import StupidWordsHandler from './Command/Handler/StupidWordsHandler';
 
 // Scheduled tasks
 import ITaskManager from './Task/Manager/ITaskManager';
@@ -36,7 +37,8 @@ class Server {
             .RegisterSubHandler(new AccountHandler())
             .RegisterSubHandler(new JoinGroupHandler())
             .RegisterSubHandler(new ShowoffHandler())
-            .RegisterSubHandler(new L8MeetupHandler());
+            .RegisterSubHandler(new L8MeetupHandler())
+            .RegisterSubHandler(new StupidWordsHandler());
         return new MessageManager([
             new HelloHandler(),
             new CommandMessageHandler(commandHandler),

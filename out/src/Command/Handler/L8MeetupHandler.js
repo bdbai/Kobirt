@@ -74,9 +74,8 @@ class L8MeetupHandler extends LoggedinHandlerBase_1.default {
 ${aprefix} 带上我 - 加入起八
 ${aprefix} 算了吧 - 退出起八
 ${aprefix} 耶 - 完成起八`;
-        this.Prefix = '起八';
-        this.accepted = (command) => command.StartsWith(this.Prefix) &&
-            !!command.Message.group;
+        this.Prefix = ['起八', '起七', '起九'];
+        this.acceptFriendMessage = false;
         this
             .RegisterSubHandler(new AddHandler())
             .RegisterSubHandler(new ExitHandler())

@@ -14,6 +14,7 @@ const AccountHandler_1 = require("./Command/Handler/AccountHandler");
 const ShowoffHandler_1 = require("./Command/Handler/ShowoffHandler");
 const JoinGroupHandler_1 = require("./Command/Handler/JoinGroupHandler");
 const L8MeetupHandler_1 = require("./Command/Handler/L8MeetupHandler");
+const StupidWordsHandler_1 = require("./Command/Handler/StupidWordsHandler");
 const TaskManager_1 = require("./Task/Manager/TaskManager");
 const WeeklyNotifyTask_1 = require("./Task/TaskItem/WeeklyNotifyTask");
 const WeeklySumupTask_1 = require("./Task/TaskItem/WeeklySumupTask");
@@ -27,7 +28,8 @@ class Server {
             .RegisterSubHandler(new AccountHandler_1.default())
             .RegisterSubHandler(new JoinGroupHandler_1.default())
             .RegisterSubHandler(new ShowoffHandler_1.default())
-            .RegisterSubHandler(new L8MeetupHandler_1.default());
+            .RegisterSubHandler(new L8MeetupHandler_1.default())
+            .RegisterSubHandler(new StupidWordsHandler_1.default());
         return new MessageManager_1.default([
             new HelloHandler_1.default(),
             new CommandMessageHandler_1.default(commandHandler),

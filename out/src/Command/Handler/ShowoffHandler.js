@@ -13,10 +13,7 @@ const ShareAPI_1 = require("../../Ingress/AgentStats/ShareAPI");
 class ShowoffHandler extends LoggedinHandlerBase_1.default {
     constructor() {
         super(...arguments);
-        // Not useful
-        this.Prefix = '';
-        this.accepted = (command) => command.StartsWith('得瑟') ||
-            command.StartsWith('嘚瑟');
+        this.Prefix = ['得瑟', '嘚瑟'];
     }
     processUserCommand(command, user) {
         return __awaiter(this, void 0, void 0, function* () {

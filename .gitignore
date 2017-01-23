@@ -1,5 +1,6 @@
 # production files
 env.sh
+words.json
 
 # typings
 .vscode

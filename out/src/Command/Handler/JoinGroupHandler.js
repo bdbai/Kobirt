@@ -30,9 +30,8 @@ class ExitGroupHandler extends LoggedinHandlerBase_1.default {
 class JoinGroupHandler extends LoggedinHandlerBase_1.default {
     constructor() {
         super();
-        this.Prefix = '诶嘿';
-        this.accepted = (command) => command.StartsWith(this.Prefix) &&
-            !!command.Message.group;
+        this.Prefix = ['诶嘿', '哎嘿', '唉嘿', '欸嘿'];
+        this.acceptFriendMessage = false;
         this
             .RegisterSubHandler(new ExitGroupHandler());
     }
