@@ -24,12 +24,12 @@ class ChangeEvent extends events_1.EventEmitter {
         try {
             res = JSON.parse(fs.readFileSync(process.env.StupidWordsFile).toString());
             console.log('Loaded new stupid words');
+            this.emit('refresh', res);
         }
         catch (err) {
             console.error('Error loading stupid words');
             this.emit('error', err);
         }
-        this.emit('refresh', res);
     }
     ready() {
         this.loadNewWords();
