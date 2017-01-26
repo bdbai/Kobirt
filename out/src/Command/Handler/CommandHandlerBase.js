@@ -68,8 +68,13 @@ class CommandHandlerBase {
                         return HandleResult_1.default.Handled;
                 }
             }
-            changed = (yield this.processCommand(command)) === HandleResult_1.default.Changed || changed;
-            return changed ? HandleResult_1.default.Changed : HandleResult_1.default.Handled;
+            const handleResult = yield this.processCommand(command);
+            if (handleResult === HandleResult_1.default.Skipped && changed) {
+                return HandleResult_1.default.Changed;
+            }
+            else {
+                return handleResult;
+            }
         });
     }
     RegisterSubHandler(subCommand) {

@@ -23,6 +23,8 @@ ${aprefix} help - 输出这条信息
 ${aprefix} 得瑟 - 显示统计信息
 ${aprefix} 诶嘿 - 参与群组排行榜
 ${aprefix} 起八 - 发起/查看起八统计
+${aprefix} 记住 - 添加 K 菊回复
+${aprefix} 忘记 - 删除 K 菊回复
 `);
             }
             else {

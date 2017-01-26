@@ -84,7 +84,7 @@ class AccountHandler extends CommandHandlerBase_1.default {
     }
     processCommand(command) {
         return __awaiter(this, void 0, void 0, function* () {
-            const aprefix = command.GetAccumulatedPrefix() + ' ' + command.GetCurrentContent();
+            const aprefix = command.GetAccumulatedPrefix() + ' ' + command.GetCurrentContent(this.Prefix);
             command.Message.Reply(`${aprefix} 我是谁 - 输出已经绑定的特工 ID
 ${aprefix} 绑定 - 绑定 AgentStats
 ${aprefix} 注销 - 解除绑定 AgentStats`);

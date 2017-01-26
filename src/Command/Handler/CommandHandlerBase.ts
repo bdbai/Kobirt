@@ -70,9 +70,13 @@ abstract class CommandHandlerBase implements ICommandHandler {
             }
         }
 
-        changed = await this.processCommand(command) === HandleResult.Changed || changed;
+        const handleResult = await this.processCommand(command);
 
-        return changed ? HandleResult.Changed : HandleResult.Handled;
+        if (handleResult === HandleResult.Skipped && changed) {
+            return HandleResult.Changed;
+        } else {
+            return handleResult;
+        }
     }
 
     public RegisterSubHandler(subCommand: ICommandHandler): ICommandHandler {

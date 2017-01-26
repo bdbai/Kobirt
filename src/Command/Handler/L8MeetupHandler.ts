@@ -77,13 +77,13 @@ ${aprefix} 耶 - 完成起八`;
             command.Message.Reply(
                 `起八状态：人${len >= 8 ? '齐了' : '没齐'}（${len}/8）
 ${meetups.map(i => '@' + i.AgentQq.AgentId).join('\r\n')}
-${this.tips(`${command.GetAccumulatedPrefix()} ${command.GetCurrentContent()}`)}`
+${this.tips(`${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)}`)}`
             );
         } else {
             // Create a new L8Meetup
             await L8Meetup.addQqToMeetup(user, command.Message.group_uid);
             command.Message.Reply(
-                `${user.AgentId} 发起了起八！其他人可以发${this.tips(`${command.GetAccumulatedPrefix()} ${command.GetCurrentContent()}`)}`
+                `${user.AgentId} 发起了起八！其他人可以发${this.tips(`${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)}`)}`
             );
         }
 

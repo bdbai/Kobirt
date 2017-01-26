@@ -17,8 +17,13 @@ class Command {
             return this;
         }
     }
-    GetCurrentContent() {
-        return this.Content.split(' ')[0];
+    GetCurrentContent(prefix = []) {
+        if (prefix.length === 0) {
+            return this.Content.split(' ')[0];
+        }
+        else {
+            return prefix.find(i => this.StartsWith(i));
+        }
     }
     GetAccumulatedPrefix() {
         return this.AccumulatedPrefixes.join(' ');

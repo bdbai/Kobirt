@@ -23,8 +23,12 @@ export default class Command {
             return this;
         }
     }
-    public GetCurrentContent() {
-        return this.Content.split(' ')[0];
+    public GetCurrentContent(prefix: Array<string> = []) {
+        if (prefix.length === 0) {
+            return this.Content.split(' ')[0];
+        } else {
+            return prefix.find(i => this.StartsWith(i));
+        }
     }
     public GetAccumulatedPrefix() {
         return this.AccumulatedPrefixes.join(' ');
