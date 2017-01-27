@@ -21,7 +21,7 @@ export default class DelHandler extends CommandHandlerBase {
         const instructions = pattern.split('=');
 
         if (instructions.length < 2) {
-            throw new BadCommand('格式\nK 忘记 关键词=要删除的话', command);
+            throw new BadCommand('格式：\nK 忘记 关键词=要删除的话', command);
         }
 
         const filePath = process.env.StupidWordsFile as string;

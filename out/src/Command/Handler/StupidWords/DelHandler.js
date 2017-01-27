@@ -27,7 +27,7 @@ class DelHandler extends CommandHandlerBase_1.default {
             const pattern = command.GetSubCommand(this.Prefix).Content;
             const instructions = pattern.split('=');
             if (instructions.length < 2) {
-                throw new BadCommand_1.default('格式\nK 忘记 关键词=要删除的话', command);
+                throw new BadCommand_1.default('格式：\nK 忘记 关键词=要删除的话', command);
             }
             const filePath = process.env.StupidWordsFile;
             // Handle multiple '='

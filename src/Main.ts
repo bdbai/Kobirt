@@ -12,13 +12,18 @@ import DisposeHandler from './Message/Handler/DisposeHandler';
 // Command handlers
 import CommandHandler from './Command/Handler/CommandHandler';
 import HelpHandler from './Command/Handler/HelpHandler';
-import AccountHandler from './Command/Handler/AccountHandler';
+import WhoAmIHandler from './Command/Handler/WhoAmIHandler';
+import BindHandler from './Command/Handler/BindHandler';
+import UnbindHandler from './Command/Handler/UnbindHandler';
 import ShowoffHandler from './Command/Handler/ShowoffHandler';
 import JoinGroupHandler from './Command/Handler/JoinGroupHandler';
 import L8MeetupHandler from './Command/Handler/L8MeetupHandler';
 import StupidWordsDisplayHandler from './Command/Handler/StupidWords/DisplayHandler';
 import StupidWordsAddHandler from './Command/Handler/StupidWords/AddHandler';
 import StupidWordsDelHandler from './Command/Handler/StupidWords/DelHandler';
+
+// Event dispatcher
+import EventDispatcher from './Event/EventDispatcher';
 
 // Scheduled tasks
 import ITaskManager from './Task/Manager/ITaskManager';
@@ -36,14 +41,17 @@ class Server {
         const commandHandler = new CommandHandler('K')
             // Insert your command handlers here!
             .RegisterSubHandler(new HelpHandler())
-            .RegisterSubHandler(new AccountHandler())
+            .RegisterSubHandler(new WhoAmIHandler())
+            .RegisterSubHandler(new BindHandler())
+            .RegisterSubHandler(new UnbindHandler())
             .RegisterSubHandler(new JoinGroupHandler())
             .RegisterSubHandler(new ShowoffHandler())
             .RegisterSubHandler(new L8MeetupHandler())
             .RegisterSubHandler(new StupidWordsAddHandler())
             .RegisterSubHandler(new StupidWordsDelHandler())
             .RegisterSubHandler(new StupidWordsDisplayHandler());
-        return new MessageManager([
+        return new MessageManager(EventDispatcher,
+        [
             new HelloHandler(),
             new CommandMessageHandler(commandHandler),
             // Insert your message handlers here!

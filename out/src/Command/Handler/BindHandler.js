@@ -12,21 +12,6 @@ const HandleResult_1 = require("../../Message/Handler/HandleResult");
 const ShareAPI_1 = require("../../Ingress/AgentStats/ShareAPI");
 const AgentQq_1 = require("../../Model/AgentQq");
 const BadCommand_1 = require("../Error/BadCommand");
-class WhoAmIHandler extends CommandHandlerBase_1.default {
-    constructor() {
-        super(...arguments);
-        this.Prefix = '我是谁';
-    }
-    processCommand(command) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-            if (!user)
-                throw new BadCommand_1.default('我好像不认识你诶。请先用指令绑定你的游戏 ID。', command);
-            command.Message.Reply(`啊哈！你就是特工 ${user.AgentId} ！`);
-            return HandleResult_1.default.Handled;
-        });
-    }
-}
 class BindHandler extends CommandHandlerBase_1.default {
     constructor() {
         super(...arguments);
@@ -56,42 +41,6 @@ class BindHandler extends CommandHandlerBase_1.default {
         });
     }
 }
-class UnbindHandler extends CommandHandlerBase_1.default {
-    constructor() {
-        super(...arguments);
-        this.Prefix = '注销';
-    }
-    processCommand(command) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const userByQQ = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-            if (!userByQQ)
-                throw new BadCommand_1.default('你还没绑定呢', command);
-            yield userByQQ.unbind();
-            command.Message.Reply('再见QAQ\r\n记得到 AgentStats 网站取消分享哦~');
-            return HandleResult_1.default.Handled;
-        });
-    }
-}
-class AccountHandler extends CommandHandlerBase_1.default {
-    constructor() {
-        super();
-        this.Prefix = ['账户', '帐户'];
-        this.acceptGroupMessage = false;
-        this
-            .RegisterSubHandler(new WhoAmIHandler())
-            .RegisterSubHandler(new BindHandler())
-            .RegisterSubHandler(new UnbindHandler());
-    }
-    processCommand(command) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const aprefix = command.GetAccumulatedPrefix() + ' ' + command.GetCurrentContent(this.Prefix);
-            command.Message.Reply(`${aprefix} 我是谁 - 输出已经绑定的特工 ID
-${aprefix} 绑定 - 绑定 AgentStats
-${aprefix} 注销 - 解除绑定 AgentStats`);
-            return HandleResult_1.default.Handled;
-        });
-    }
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = AccountHandler;
-//# sourceMappingURL=AccountHandler.js.map
+exports.default = BindHandler;
+//# sourceMappingURL=BindHandler.js.map

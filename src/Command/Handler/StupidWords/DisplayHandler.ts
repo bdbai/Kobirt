@@ -26,7 +26,6 @@ class ChangeEvent extends EventEmitter {
             this.emit('refresh', res);
         } catch (err) {
             console.error('Error loading stupid words');
-            this.emit('error', err);
         }
     }
 

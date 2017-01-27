@@ -9,7 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const HandleResult_1 = require("../Handler/HandleResult");
 class MessageManager {
-    constructor(handlers = []) {
+    constructor(eventDispatcher, handlers = []) {
+        this.eventDispatcher = eventDispatcher;
         this.handlers = handlers;
     }
     HandlerRegister(handler) {
@@ -17,17 +18,23 @@ class MessageManager {
     }
     ProcessMessage(message) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (message.class !== 'recv') {
-                message.Dispose();
-                return;
-            }
-            let handled = false;
-            for (const handler of this.handlers) {
-                const result = yield handler.Handle(message);
-                if (result === HandleResult_1.default.Handled) {
-                    handled = true;
+            switch (message.post_type) {
+                case 'send':
+                    message.Dispose();
                     break;
-                }
+                case 'recv':
+                    let handled = false;
+                    for (const handler of this.handlers) {
+                        const result = yield handler.Handle(message);
+                        if (result === HandleResult_1.default.Handled) {
+                            handled = true;
+                            break;
+                        }
+                    }
+                    break;
+                case 'event':
+                    this.eventDispatcher(message);
+                    break;
             }
         });
     }

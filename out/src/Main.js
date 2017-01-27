@@ -10,13 +10,17 @@ const DisposeHandler_1 = require("./Message/Handler/DisposeHandler");
 // Command handlers
 const CommandHandler_1 = require("./Command/Handler/CommandHandler");
 const HelpHandler_1 = require("./Command/Handler/HelpHandler");
-const AccountHandler_1 = require("./Command/Handler/AccountHandler");
+const WhoAmIHandler_1 = require("./Command/Handler/WhoAmIHandler");
+const BindHandler_1 = require("./Command/Handler/BindHandler");
+const UnbindHandler_1 = require("./Command/Handler/UnbindHandler");
 const ShowoffHandler_1 = require("./Command/Handler/ShowoffHandler");
 const JoinGroupHandler_1 = require("./Command/Handler/JoinGroupHandler");
 const L8MeetupHandler_1 = require("./Command/Handler/L8MeetupHandler");
 const DisplayHandler_1 = require("./Command/Handler/StupidWords/DisplayHandler");
 const AddHandler_1 = require("./Command/Handler/StupidWords/AddHandler");
 const DelHandler_1 = require("./Command/Handler/StupidWords/DelHandler");
+// Event dispatcher
+const EventDispatcher_1 = require("./Event/EventDispatcher");
 const TaskManager_1 = require("./Task/Manager/TaskManager");
 const WeeklyNotifyTask_1 = require("./Task/TaskItem/WeeklyNotifyTask");
 const WeeklySumupTask_1 = require("./Task/TaskItem/WeeklySumupTask");
@@ -27,14 +31,16 @@ class Server {
     static InitMessageManager() {
         const commandHandler = new CommandHandler_1.default('K')
             .RegisterSubHandler(new HelpHandler_1.default())
-            .RegisterSubHandler(new AccountHandler_1.default())
+            .RegisterSubHandler(new WhoAmIHandler_1.default())
+            .RegisterSubHandler(new BindHandler_1.default())
+            .RegisterSubHandler(new UnbindHandler_1.default())
             .RegisterSubHandler(new JoinGroupHandler_1.default())
             .RegisterSubHandler(new ShowoffHandler_1.default())
             .RegisterSubHandler(new L8MeetupHandler_1.default())
             .RegisterSubHandler(new AddHandler_1.default())
             .RegisterSubHandler(new DelHandler_1.default())
             .RegisterSubHandler(new DisplayHandler_1.default());
-        return new MessageManager_1.default([
+        return new MessageManager_1.default(EventDispatcher_1.default, [
             new HelloHandler_1.default(),
             new CommandMessageHandler_1.default(commandHandler),
             // Insert your message handlers here!

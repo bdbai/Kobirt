@@ -28,14 +28,14 @@ npm start
 ```
 K help - 输出帮助
 
-K 账户 - 输出账户命令帮助
-K 账户 我是谁 - 输出绑定的 Agent Stats 特工名
-K 账户 绑定 - 绑定 Agent Stats
-K 账户 注销 - 解除绑定 Agent Stats
+K 我是谁 - 输出绑定的 Agent Stats 特工名
+K 绑定 - 绑定 Agent Stats
+K 注销 - 解除绑定 Agent Stats
 
 K 得瑟 - 显示粗略统计信息
 ```
 #### 群聊
+新人加群退群提醒；
 ```
 K help 输出帮助
 
@@ -50,6 +50,7 @@ K 起八 带上我 - 加入起八
 K 起八 算了吧 - 退出起八
 
 K 记住 - 添加关键词回复
+K 忘记 - 删除关键词回复
 ```
 #### 定时任务
 *北京时间*

@@ -15,14 +15,15 @@ export default class AddHandler extends CommandHandlerBase {
         const instructions = pattern.split('=');
 
         if (instructions.length < 2) {
-            throw new BadCommand('格式\nK 记住 关键词=要说的话', command);
+            throw new BadCommand('格式：\nK 记住 关键词=要说的话', command);
         }
 
         const filePath = process.env.StupidWordsFile as string;
 
         // Handle multiple '='
-        const [ kw, ...segs ] = instructions;
-        const seg = segs.join('=');
+        const [ rawKw, ...segs ] = instructions;
+        const kw = rawKw.trim();
+        const seg = segs.join('=').trim();
 
         if (kw.length < 1 || seg.length < 1) {
             throw new BadCommand('你再说一遍？', command);
@@ -45,6 +46,9 @@ export default class AddHandler extends CommandHandlerBase {
                 text: [ seg ]
             });
         }
+
+        // Bring long keywords to front
+        oldWords.words.sort((a, b) => b.kw[0].length - a.kw[0].length);
 
         fs.writeFileSync(filePath, JSON.stringify(oldWords));
         command.Message.Reply(`你说 ${kw}，K 菊说 ${seg}`);

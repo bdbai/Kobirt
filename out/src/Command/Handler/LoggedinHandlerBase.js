@@ -15,7 +15,7 @@ class LoggedinHandlerBase extends CommandHandlerBase_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
             if (!user)
-                throw new BadCommand_1.default('你还没绑定账户呢，请先加我为好友，然后单独给我发消息 K 账户 绑定', command);
+                throw new BadCommand_1.default('你还没绑定账户呢，请先加我为好友，然后单独给我发指令：K 绑定', command);
             return yield this.processUserCommand(command, user);
         });
     }

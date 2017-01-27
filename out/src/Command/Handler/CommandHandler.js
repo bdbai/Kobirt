@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const HelpHandler_1 = require("./HelpHandler");
+const HandleResult_1 = require("../../Message/Handler/HandleResult");
 class CommandHandler extends HelpHandler_1.default {
     constructor(Prefix) {
         super();
@@ -17,6 +18,9 @@ class CommandHandler extends HelpHandler_1.default {
         const _super = name => super[name];
         return __awaiter(this, void 0, void 0, function* () {
             command.AccumulatedPrefixes.push(this.Prefix);
+            if (command.Message.group &&
+                command.GetSubCommand(this.Prefix).Content.length > 0)
+                return HandleResult_1.default.Skipped;
             return yield _super("processCommand").call(this, command);
         });
     }
