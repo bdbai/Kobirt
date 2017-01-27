@@ -18,10 +18,10 @@ class MessageManager implements IMessageManager {
 
     public async ProcessMessage(message: IMessage): Promise<void> {
         switch (message.post_type) {
-            case 'send':
+            case 'send_message':
                 message.Dispose();
                 break;
-            case 'recv':
+            case 'receive_message':
                 let handled = false;
                 for (const handler of this.handlers) {
                     const result = await handler.Handle(message);

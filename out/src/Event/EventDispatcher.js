@@ -18,6 +18,7 @@ const EventDispatcher = (message) => {
             LoseGroupMemberHandler_1.default(message.param[0], message.param[1]);
             break;
     }
+    message.Dispose();
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = EventDispatcher;

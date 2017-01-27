@@ -21,6 +21,7 @@ const EventDispatcher: IEventDispatcher = (message: IMessage) => {
             LoseGroupMemberHandler(message.param[0], message.param[1]);
             break;
     }
+    message.Dispose();
 }
 
 export default EventDispatcher;

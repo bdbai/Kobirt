@@ -19,10 +19,10 @@ class MessageManager {
     ProcessMessage(message) {
         return __awaiter(this, void 0, void 0, function* () {
             switch (message.post_type) {
-                case 'send':
+                case 'send_message':
                     message.Dispose();
                     break;
-                case 'recv':
+                case 'receive_message':
                     let handled = false;
                     for (const handler of this.handlers) {
                         const result = yield handler.Handle(message);
