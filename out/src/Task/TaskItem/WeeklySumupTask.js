@@ -28,16 +28,27 @@ class WeeklySumupTask {
                     continue;
                 }
                 const ap = agent.Medals.find(i => i.name === 'ap');
+                const mu = agent.Medals.find(i => i.name === 'illuminator');
                 data.push({
                     name: agent.AgentId,
                     data: {
-                        week: ap.progression.week
+                        weekAp: ap.progression.week,
+                        weekMu: mu.progression.week
                     }
                 });
             }
-            data.sort((a, b) => b.data.week - a.data.week);
-            API_1.SendGroupMessage(groupUid, '本周特工ap排行榜：\r\n' +
-                data.map(i => `@${i.name} ${i.data.week}`).join('\r\n'));
+            let message = '';
+            // AP
+            data.sort((a, b) => b.data.weekAp - a.data.weekAp);
+            message += '本周特工ap排行榜：\n' +
+                data.map(i => `@${i.name} ${i.data.weekAp}`).join('\n');
+            message += '\n\n';
+            // MU
+            data.sort((a, b) => b.data.weekMu - a.data.weekMu);
+            message += '本周特工mu排行榜：\n' +
+                data.map(i => `@${i.name} ${i.data.weekAp}`).join('\n');
+            message += '\n\n排行榜仅供娱乐';
+            API_1.SendGroupMessage(groupUid, message);
         });
     }
     DoWork() {

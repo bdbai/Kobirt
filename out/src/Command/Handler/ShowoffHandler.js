@@ -24,15 +24,19 @@ class ShowoffHandler extends LoggedinHandlerBase_1.default {
                 return HandleResult_1.default.Handled;
             }
             const apMedal = agent.Medals.find(i => i.name === 'ap');
+            const muMedal = agent.Medals.find(i => i.name === 'illuminator');
             const title = agent.Level > 9 ? '大佬' : '特工';
-            command.Message.Reply(`${agent.Level} 级${title} ${agent.AgentId} ` +
-                `本次进账 AP ${apMedal.progression.latest}；` +
-                `总计 AP ${agent.AP}；共有勋章 ` +
-                `${agent.CountMedals('bronze')} 铜，` +
-                `${agent.CountMedals('silver')} 银，` +
-                `${agent.CountMedals('gold')} 金，` +
-                `${agent.CountMedals('platinum')} 铂，` +
-                `${agent.CountMedals('black')} 黑。`);
+            command.Message.Reply(`${agent.Level} 级${title} ${agent.AgentId}
+本次/周/月/总
+AP ${apMedal.progression.latest}/${apMedal.progression.week}/${apMedal.progression.month}/${apMedal.progression.total}
+MU ${muMedal.progression.latest}/${muMedal.progression.week}/${muMedal.progression.month}/${muMedal.progression.total}
+共有勋章 ` +
+                `${agent.CountMedals('bronze')} 铜 ` +
+                `${agent.CountMedals('silver')} 银 ` +
+                `${agent.CountMedals('gold')} 金 ` +
+                `${agent.CountMedals('platinum')} 铂 ` +
+                `${agent.CountMedals('black')} 黑
+以上数据仅供娱乐`);
             return HandleResult_1.default.Handled;
         });
     }
