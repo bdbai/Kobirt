@@ -45,6 +45,10 @@ export default class DelHandler extends CommandHandlerBase {
             }
 
             oldWord.text = oldWord.text.filter(i => i !== seg);
+            if (oldWord.text.length === 0) {
+                // remove this kw
+                oldWords.words = oldWords.words.filter(i => i !== oldWord);
+            }
         } else {
             throw new BadCommand('你说什么？我听不清……', command);
         }
