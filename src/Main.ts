@@ -76,6 +76,8 @@ class Server {
         app.use(bodyParser.json());
         new RequestAdapter(app, Server.InitMessageManager());
         app.listen(process.env.PORT || 5001);
+
+        process.on('unhandledRejection', err => console.error(err.stack));
         return 0;
     }
 }

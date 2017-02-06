@@ -46,7 +46,7 @@ class WeeklySumupTask {
             // MU
             data.sort((a, b) => b.data.weekMu - a.data.weekMu);
             message += '本周特工mu排行榜：\n' +
-                data.map(i => `@${i.name} ${i.data.weekAp}`).join('\n');
+                data.map(i => `@${i.name} ${i.data.weekMu}`).join('\n');
             message += '\n\n排行榜仅供娱乐';
             API_1.SendGroupMessage(groupUid, message);
         });
