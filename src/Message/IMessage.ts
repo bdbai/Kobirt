@@ -16,7 +16,7 @@ interface IMessage {
     post_type: string,
 
     event?: string,
-    param?: any,
+    params?: any,
 
     Reply: (content: String) => any
     Dispose: () => any

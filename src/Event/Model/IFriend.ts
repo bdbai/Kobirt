@@ -1,14 +1,18 @@
 interface IFriend {
-    category: string;
-    client_type: string;
-    face: number;
-    flag: number;
+    bad_record?: number;
+    city?: string;
+    client_type?: string;
+    country?: string;
     id: number;
-    is_vip: number;
-    markname: string;
+    join_time?: number;
+    last_speak_time?: number;
+    level?: string;
     name: string;
-    state: string;
+    province?: string;
+    qage?: number;
+    role?: string;
+    sex?: string;
+    state?: string;
     uid: number;
-    vip_level: number;
 }
 export default IFriend;

@@ -9,16 +9,16 @@ import LoseGroupMemberHandler from './Handler/LoseGroupMemberHandler';
 const EventDispatcher: IEventDispatcher = (message: IMessage) => {
     switch (message.event) {
         case 'new_friend':
-            NewFriendHandler(message.param[0]);
+            NewFriendHandler(message.params[0]);
             break;
         case 'lose_friend':
-            LoseFriendHandler(message.param[0]);
+            LoseFriendHandler(message.params[0]);
             break;
         case 'new_group_member':
-            NewGroupMemberHandler(message.param[0], message.param[1]);
+            NewGroupMemberHandler(message.params[0], message.params[1]);
             break;
         case 'lose_group_member':
-            LoseGroupMemberHandler(message.param[0], message.param[1]);
+            LoseGroupMemberHandler(message.params[0], message.params[1]);
             break;
     }
     message.Dispose();

@@ -6,16 +6,16 @@ const LoseGroupMemberHandler_1 = require("./Handler/LoseGroupMemberHandler");
 const EventDispatcher = (message) => {
     switch (message.event) {
         case 'new_friend':
-            NewFriendHandler_1.default(message.param[0]);
+            NewFriendHandler_1.default(message.params[0]);
             break;
         case 'lose_friend':
-            LoseFriendHandler_1.default(message.param[0]);
+            LoseFriendHandler_1.default(message.params[0]);
             break;
         case 'new_group_member':
-            NewGroupMemberHandler_1.default(message.param[0], message.param[1]);
+            NewGroupMemberHandler_1.default(message.params[0], message.params[1]);
             break;
         case 'lose_group_member':
-            LoseGroupMemberHandler_1.default(message.param[0], message.param[1]);
+            LoseGroupMemberHandler_1.default(message.params[0], message.params[1]);
             break;
     }
     message.Dispose();
