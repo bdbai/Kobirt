@@ -54,6 +54,9 @@ __decorate([
 __decorate([
     AVProperty_1.default()
 ], AgentQq.prototype, "AgentId", void 0);
+__decorate([
+    AVProperty_1.default()
+], AgentQq.prototype, "LastAp", void 0);
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AgentQq;
 AV.Object.register(AgentQq);

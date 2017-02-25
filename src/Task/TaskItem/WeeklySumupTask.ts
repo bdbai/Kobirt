@@ -24,6 +24,7 @@ export default class WeeklySumupTask implements ITask {
         agents: Map<string, Promise<IUser>>) {
 
         const data = Array<ExportedData>();
+        const lazyguys = Array<AgentQq>();
         for (const qq of qqs) {
             let agent: IUser;
             try {
@@ -34,12 +35,20 @@ export default class WeeklySumupTask implements ITask {
             }
             const ap = agent.Medals.find(i => i.name === 'ap');
             const mu = agent.Medals.find(i => i.name === 'illuminator');
-            data.push({
-                name: agent.AgentId,
-                data: {
-                    weekAp: ap.progression.week,
-                    weekMu: mu.progression.week
-            }});
+
+            if (qq.LastAp === ap.progression.total) {
+                lazyguys.push(qq);
+            } else {
+                qq.LastAp = ap.progression.total;
+                qq.save();
+                data.push({
+                    name: agent.AgentId,
+                    data: {
+                        weekAp: ap.progression.week,
+                        weekMu: mu.progression.week
+                    }
+                });
+            }
         }
 
         let message = '';
@@ -48,12 +57,16 @@ export default class WeeklySumupTask implements ITask {
         message += '本周特工ap排行榜：\n' +
             data.map(i => `@${i.name} ${i.data.weekAp}`).join('\n');
 
-        message += '\n\n';
-
         // MU
         data.sort((a, b) => b.data.weekMu - a.data.weekMu);
-        message += '本周特工mu排行榜：\n' +
+        message += '\n\n本周特工mu排行榜：\n' +
             data.map(i => `@${i.name} ${i.data.weekMu}`).join('\n');
+
+        // Lazy guys!
+        if (lazyguys.length > 0) {
+            message += '\n\n以下特工未及时上传数据，不参与排名：\n' +
+                lazyguys.map(i => `@${i.AgentId}`).join('\n');
+        }
 
         message += '\n\n排行榜仅供娱乐';
         SendGroupMessage(groupUid, message);

@@ -43,7 +43,7 @@ class JoinGroupHandler extends LoggedinHandlerBase_1.default {
                 throw new BadCommand_1.default(`我认识你，${user.AgentId}！
 退出排行榜请说 ${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)} 算了吧`, command);
             yield QqGroup_1.default.addMemberToList(user, command.Message.group_uid);
-            command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。
+            command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。请及时更新数据，否则无法参与当周排名。
 后悔的话请说 ${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)} 算了吧`);
             return HandleResult_1.default.Handled;
         });

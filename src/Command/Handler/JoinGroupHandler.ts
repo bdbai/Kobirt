@@ -31,7 +31,7 @@ export default class JoinGroupHandler extends LoggedinHandlerBase {
 退出排行榜请说 ${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)} 算了吧`, command);
 
         await QqGroup.addMemberToList(user, command.Message.group_uid);
-        command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。
+        command.Message.Reply(`${user.AgentId} 我记住你了。下次排行榜会算上你的。请及时更新数据，否则无法参与当周排名。
 后悔的话请说 ${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)} 算了吧`);
         return HandleResult.Handled;
     }

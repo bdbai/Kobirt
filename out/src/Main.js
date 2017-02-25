@@ -54,7 +54,7 @@ class Server {
         });
         qiniu.conf.ACCESS_KEY = process.env.QiniuAK;
         qiniu.conf.SECRET_KEY = process.env.QiniuSK;
-        const taskManager = new TaskManager_1.default(new WeeklyNotifyTask_1.default('马上开始统计本周进度了，赶快更新 AgentStats 资料吧！\n说“K 诶嘿”参加统计，“K 诶嘿 算了吧”退出统计'), new WeeklySumupTask_1.default());
+        const taskManager = new TaskManager_1.default(new WeeklyNotifyTask_1.default('马上开始统计本周进度了，赶快更新 AgentStats 资料吧！\n说“K 诶嘿”参加统计，“K 诶嘿 算了吧”退出统计\n本周未更新数据的特工不能参加排名！'), new WeeklySumupTask_1.default());
         const app = express();
         app.use(bodyParser.json());
         new RequestAdapter_1.default(app, Server.InitMessageManager());

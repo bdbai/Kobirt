@@ -10,7 +10,6 @@ K 菊，Ingress 昆绿大佬，被<del>咸鱼</del>苏绿膜。
 Kobirt 需要 LeacCloud 作为存储后端。
 2. 在 AgentStats 上创建一个账户  
 用于接收分享的特工资料。
-3. <del>在七牛创建一个对象存储空间</del>
 
 ### 搭建
 1. 在服务器上部署 [sjdy521/Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq) 项目，设置上报地址为 `http://localhost:5001`

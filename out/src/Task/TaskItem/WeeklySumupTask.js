@@ -18,6 +18,7 @@ class WeeklySumupTask {
     processGroup(groupUid, qqs, agents) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = Array();
+            const lazyguys = Array();
             for (const qq of qqs) {
                 let agent;
                 try {
@@ -29,24 +30,35 @@ class WeeklySumupTask {
                 }
                 const ap = agent.Medals.find(i => i.name === 'ap');
                 const mu = agent.Medals.find(i => i.name === 'illuminator');
-                data.push({
-                    name: agent.AgentId,
-                    data: {
-                        weekAp: ap.progression.week,
-                        weekMu: mu.progression.week
-                    }
-                });
+                if (qq.LastAp === ap.progression.total) {
+                    lazyguys.push(qq);
+                }
+                else {
+                    qq.LastAp = ap.progression.total;
+                    qq.save();
+                    data.push({
+                        name: agent.AgentId,
+                        data: {
+                            weekAp: ap.progression.week,
+                            weekMu: mu.progression.week
+                        }
+                    });
+                }
             }
             let message = '';
             // AP
             data.sort((a, b) => b.data.weekAp - a.data.weekAp);
             message += '本周特工ap排行榜：\n' +
                 data.map(i => `@${i.name} ${i.data.weekAp}`).join('\n');
-            message += '\n\n';
             // MU
             data.sort((a, b) => b.data.weekMu - a.data.weekMu);
-            message += '本周特工mu排行榜：\n' +
+            message += '\n\n本周特工mu排行榜：\n' +
                 data.map(i => `@${i.name} ${i.data.weekMu}`).join('\n');
+            // Lazy guys!
+            if (lazyguys.length > 0) {
+                message += '\n\n以下特工未及时上传数据，不参与排名：\n' +
+                    lazyguys.map(i => `@${i.AgentId}`).join('\n');
+            }
             message += '\n\n排行榜仅供娱乐';
             API_1.SendGroupMessage(groupUid, message);
         });
