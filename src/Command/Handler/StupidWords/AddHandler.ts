@@ -51,7 +51,7 @@ export default class AddHandler extends CommandHandlerBase {
         oldWords.words.sort((a, b) => b.kw[0].length - a.kw[0].length);
 
         fs.writeFileSync(filePath, JSON.stringify(oldWords));
-        command.Message.Reply(`你说 ${kw}，K 菊说 ${seg}`);
+        command.Message.Reply(`你说 K ${kw}，K 菊说 ${seg}`);
         return HandleResult.Handled;
     }
 
