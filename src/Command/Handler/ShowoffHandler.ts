@@ -25,7 +25,7 @@ export default class ShowoffHandler extends LoggedinHandlerBase {
         const title = agent.Level > 9 ? '大佬' : '特工';
         command.Message.Reply(
             `${agent.Level} 级${title} ${agent.AgentId}
-本次/周/月/总
+本次/每周/每月/总计
 AP ${apMedal.progression.latest}/${apMedal.progression.week}/${apMedal.progression.month}/${apMedal.progression.total}
 MU ${muMedal.progression.latest}/${muMedal.progression.week}/${muMedal.progression.month}/${muMedal.progression.total}
 共有勋章 ` +

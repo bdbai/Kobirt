@@ -35,16 +35,53 @@ class ChangeEvent extends EventEmitter {
     }
 }
 
-export default class DisplayHandler extends CommandHandlerBase {
+let words: IWords;
+
+function pickText(texts: Array<string>) {
+    const i = Math.floor(Math.random() * texts.length);
+    return texts[i];
+}
+
+
+export class BlacklistHandler extends CommandHandlerBase {
     public accepted = () => true;
 
-    public words: IWords;
+    private blacklistCount = new Map<number, number>();
 
     public async processCommand(command: Command) {
-        for (const word of this.words.words) {
+        const senderQq = command.Message.sender_uid;
+        for (const blacklist of words.blacklist) {
+            if (blacklist.qq === senderQq) {
+                // Block this QQ
+                const count = this.blacklistCount.get(senderQq);
+                if (count === blacklist.retry) {
+                    // Max retry exceeded
+                    this.blacklistCount.set(senderQq, 0);
+                    command.Message.Reply(pickText(blacklist.text));
+                } else {
+                    // Fail silently
+                    this.blacklistCount.set(senderQq, count ? count + 1 : 2);
+                    command.Message.Dispose();
+                }
+                return HandleResult.Handled;
+            }
+        }
+
+        return HandleResult.Skipped;
+    }
+}
+export class DisplayHandler extends CommandHandlerBase {
+    public accepted = () => true;
+
+    public pickText(texts: Array<string>) {
+        const i = Math.floor(Math.random() * texts.length);
+        return texts[i];
+    }
+
+    public async processCommand(command: Command) {
+        for (const word of words.words) {
             if (!!word.kw.find(i => command.Content.startsWith(i))) {
-                const i = Math.floor(Math.random() * word.text.length);
-                command.Message.Reply(word.text[i]);
+                command.Message.Reply(this.pickText(word.text));
                 return HandleResult.Handled;
             }
         }
@@ -55,7 +92,7 @@ export default class DisplayHandler extends CommandHandlerBase {
         super();
 
         const changeEvent = new ChangeEvent(process.env.StupidWordsFile)
-            .on('refresh', newWords => this.words = newWords)
+            .on('refresh', newWords => words = newWords)
             .on('error', err => console.error(err))
             .ready();
     }

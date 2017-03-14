@@ -39,28 +39,32 @@ export default class WeeklySumupTask implements ITask {
             if (qq.LastAp === ap.progression.total) {
                 lazyguys.push(qq);
             } else {
-                qq.LastAp = ap.progression.total;
-                qq.save();
                 data.push({
                     name: agent.AgentId,
                     data: {
-                        weekAp: ap.progression.week,
-                        weekMu: mu.progression.week
+                        weekAp: ap.progression.total - qq.LastAp,
+                        weekMu: mu.progression.total - qq.LastMu
                     }
                 });
+                qq.LastAp = ap.progression.total;
+                qq.LastMu = ap.progression.total;
+                qq.save();
             }
         }
 
         let message = '';
         // AP
         data.sort((a, b) => b.data.weekAp - a.data.weekAp);
-        message += '本周特工ap排行榜：\n' +
+        message += '本周特工 AP 排行榜：\n' +
             data.map(i => `@${i.name} ${i.data.weekAp}`).join('\n');
 
         // MU
+        /*
         data.sort((a, b) => b.data.weekMu - a.data.weekMu);
-        message += '\n\n本周特工mu排行榜：\n' +
+        message += '\n\n本周特工 MU 排行榜：\n' +
             data.map(i => `@${i.name} ${i.data.weekMu}`).join('\n');
+        */
+        message += '\n\n由于算法改进，MU 排行榜暂停一次。'
 
         // Lazy guys!
         if (lazyguys.length > 0) {

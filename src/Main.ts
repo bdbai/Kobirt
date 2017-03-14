@@ -18,7 +18,7 @@ import UnbindHandler from './Command/Handler/UnbindHandler';
 import ShowoffHandler from './Command/Handler/ShowoffHandler';
 import JoinGroupHandler from './Command/Handler/JoinGroupHandler';
 import L8MeetupHandler from './Command/Handler/L8MeetupHandler';
-import StupidWordsDisplayHandler from './Command/Handler/StupidWords/DisplayHandler';
+import { BlacklistHandler, DisplayHandler } from './Command/Handler/StupidWords/DisplayHandler';
 import StupidWordsAddHandler from './Command/Handler/StupidWords/AddHandler';
 import StupidWordsDelHandler from './Command/Handler/StupidWords/DelHandler';
 
@@ -40,6 +40,7 @@ class Server {
     public static InitMessageManager(): IMessageManager {
         const commandHandler = new CommandHandler('K')
             // Insert your command handlers here!
+            .RegisterSubHandler(new BlacklistHandler())
             .RegisterSubHandler(new HelpHandler())
             .RegisterSubHandler(new WhoAmIHandler())
             .RegisterSubHandler(new BindHandler())
@@ -49,7 +50,7 @@ class Server {
             .RegisterSubHandler(new L8MeetupHandler())
             .RegisterSubHandler(new StupidWordsAddHandler())
             .RegisterSubHandler(new StupidWordsDelHandler())
-            .RegisterSubHandler(new StupidWordsDisplayHandler());
+            .RegisterSubHandler(new DisplayHandler());
         return new MessageManager(EventDispatcher,
         [
             new HelloHandler(),

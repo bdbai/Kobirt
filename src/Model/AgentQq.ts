@@ -14,6 +14,9 @@ export default class AgentQq extends AV.Object {
     @AVProperty()
     LastAp: number;
 
+    @AVProperty()
+    LastMu: number;
+
     public static async checkUserByQq(qq: number): Promise<AgentQq> {
         const q = new AV.Query(AgentQq);
         q.equalTo('Qq', qq.toString());

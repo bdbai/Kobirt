@@ -30,6 +30,7 @@ const qiniu = require("qiniu");
 class Server {
     static InitMessageManager() {
         const commandHandler = new CommandHandler_1.default('K')
+            .RegisterSubHandler(new DisplayHandler_1.BlacklistHandler())
             .RegisterSubHandler(new HelpHandler_1.default())
             .RegisterSubHandler(new WhoAmIHandler_1.default())
             .RegisterSubHandler(new BindHandler_1.default())
@@ -39,7 +40,7 @@ class Server {
             .RegisterSubHandler(new L8MeetupHandler_1.default())
             .RegisterSubHandler(new AddHandler_1.default())
             .RegisterSubHandler(new DelHandler_1.default())
-            .RegisterSubHandler(new DisplayHandler_1.default());
+            .RegisterSubHandler(new DisplayHandler_1.DisplayHandler());
         return new MessageManager_1.default(EventDispatcher_1.default, [
             new HelloHandler_1.default(),
             new CommandMessageHandler_1.default(commandHandler),
