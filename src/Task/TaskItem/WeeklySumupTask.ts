@@ -59,12 +59,9 @@ export default class WeeklySumupTask implements ITask {
             data.map(i => `@${i.name} ${i.data.weekAp}`).join('\n');
 
         // MU
-        /*
         data.sort((a, b) => b.data.weekMu - a.data.weekMu);
         message += '\n\n本周特工 MU 排行榜：\n' +
             data.map(i => `@${i.name} ${i.data.weekMu}`).join('\n');
-        */
-        message += '\n\n由于算法改进，MU 排行榜暂停一次。'
 
         // Lazy guys!
         if (lazyguys.length > 0) {
@@ -72,7 +69,7 @@ export default class WeeklySumupTask implements ITask {
                 lazyguys.map(i => `@${i.AgentId}`).join('\n');
         }
 
-        message += '\n\n排行榜仅供娱乐';
+        message += '\n\n留空表示第一次参与排行榜\n排行榜仅供娱乐';
         SendGroupMessage(groupUid, message);
     }
 
