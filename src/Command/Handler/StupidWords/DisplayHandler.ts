@@ -80,7 +80,10 @@ export class DisplayHandler extends CommandHandlerBase {
 
     public async processCommand(command: Command) {
         for (const word of words.words) {
-            if (!!word.kw.find(i => command.Content.startsWith(i))) {
+            if (!!word.kw.find(i =>
+                command.Content.toLowerCase().
+                    startsWith(i.toLowerCase()))
+            ) {
                 command.Message.Reply(this.pickText(word.text));
                 return HandleResult.Handled;
             }

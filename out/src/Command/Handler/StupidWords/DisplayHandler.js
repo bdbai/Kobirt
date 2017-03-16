@@ -87,7 +87,8 @@ class DisplayHandler extends CommandHandlerBase_1.default {
     processCommand(command) {
         return __awaiter(this, void 0, void 0, function* () {
             for (const word of words.words) {
-                if (!!word.kw.find(i => command.Content.startsWith(i))) {
+                if (!!word.kw.find(i => command.Content.toLowerCase().
+                    startsWith(i.toLowerCase()))) {
                     command.Message.Reply(this.pickText(word.text));
                     return HandleResult_1.default.Handled;
                 }
