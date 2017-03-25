@@ -27,11 +27,11 @@ export default class JoinGroupHandler extends LoggedinHandlerBase {
     public async processUserCommand(command: Command, user: AgentQq): Promise<HandleResult> {
         const thisGroup = command.Message.group_uid.toString();
         const qqGroup = await QqGroup.findQqGroup(user, command.Message.group_uid);
-        if (qqGroup) throw new BadCommand(`我认识你，${user.AgentId}！
+        if (qqGroup) throw new BadCommand(`我认识你，${user.AgentId}！不用重复诶嘿！
 退出排行榜请说 ${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)} 算了吧`, command);
 
         await QqGroup.addMemberToList(user, command.Message.group_uid);
-        command.Message.Reply(`好的 ${user.AgentId}，下周排行榜会算上你的。请及时更新数据，否则无法参与当周排名。
+        command.Message.Reply(`好的 ${user.AgentId}，从下周开始排行榜会算上你的。请及时更新数据，否则无法参与当周排名。
 后悔的话请说 ${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)} 算了吧`);
         return HandleResult.Handled;
     }

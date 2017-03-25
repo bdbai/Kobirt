@@ -47,7 +47,7 @@ export default class WeeklySumupTask implements ITask {
                     }
                 });
                 qq.LastAp = ap.progression.total;
-                qq.LastMu = ap.progression.total;
+                qq.LastMu = mu.progression.total;
                 qq.save();
             }
         }
@@ -69,7 +69,7 @@ export default class WeeklySumupTask implements ITask {
                 lazyguys.map(i => `@${i.AgentId}`).join('\n');
         }
 
-        message += '\n\n留空表示第一次参与排行榜\n排行榜仅供娱乐';
+        message += '\n\nNaN 表示第一次参与排行榜\n排行榜仅供娱乐';
         SendGroupMessage(groupUid, message);
     }
 

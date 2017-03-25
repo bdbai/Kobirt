@@ -42,7 +42,7 @@ class WeeklySumupTask {
                         }
                     });
                     qq.LastAp = ap.progression.total;
-                    qq.LastMu = ap.progression.total;
+                    qq.LastMu = mu.progression.total;
                     qq.save();
                 }
             }
@@ -60,7 +60,7 @@ class WeeklySumupTask {
                 message += '\n\n以下特工未及时上传数据，不参与排名：\n' +
                     lazyguys.map(i => `@${i.AgentId}`).join('\n');
             }
-            message += '\n\n留空表示第一次参与排行榜\n排行榜仅供娱乐';
+            message += '\n\nNaN 表示第一次参与排行榜\n排行榜仅供娱乐';
             API_1.SendGroupMessage(groupUid, message);
         });
     }
