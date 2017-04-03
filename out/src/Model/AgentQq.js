@@ -47,6 +47,12 @@ class AgentQq extends AV.Object {
             return yield obj.save();
         });
     }
+    static fetchAllAgentQqs() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const q = new AV.Query(AgentQq);
+            return yield q.find();
+        });
+    }
 }
 __decorate([
     AVProperty_1.default()

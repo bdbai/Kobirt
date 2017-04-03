@@ -38,6 +38,10 @@ export default class AgentQq extends AV.Object {
         obj.AgentId = agentId;
         return await obj.save() as AgentQq;
     }
+    public static async fetchAllAgentQqs(): Promise<Array<AgentQq>> {
+        const q = new AV.Query(AgentQq);
+        return await q.find() as Array<AgentQq>;
+    }
 }
 
 AV.Object.register(AgentQq);
