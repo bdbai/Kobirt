@@ -1,0 +1,3 @@
+#!/usr/bin/execlineb -P
+cd /home/user/Kobirt/
+/usr/bin/node /home/user/Kobirt/out/server.js

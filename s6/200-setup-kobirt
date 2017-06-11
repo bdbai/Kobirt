@@ -1,0 +1,15 @@
+#!/usr/bin/with-contenv bash
+
+set -eo pipefail
+
+if [ -d /home/user/Kobirt ]; then
+    echo 'Kobirt exists.'
+    exit 0
+fi
+
+cd /home/user
+git clone https://github.com/bdbai/Kobirt
+cd ./Kobirt
+npm install
+cp words.sample.json words.json
+
