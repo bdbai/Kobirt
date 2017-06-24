@@ -5,78 +5,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+Object.defineProperty(exports, "__esModule", { value: true });
 const AV = require("leancloud-storage");
 const AVProperty_1 = require("./AVProperty");
 class QqGroup extends AV.Object {
-    static fetchMemberList(group) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const q = new AV.Query(QqGroup);
-            q.equalTo('Group', group.toString());
-            return yield q.find();
-        });
+    static async fetchMemberList(group) {
+        const q = new AV.Query(QqGroup);
+        q.equalTo('Group', group.toString());
+        return await q.find();
     }
-    static fetchJoinedGroups(qq) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const q = new AV.Query(QqGroup);
-            q.equalTo('Qq', qq);
-            return yield q.find();
-        });
+    static async fetchJoinedGroups(qq) {
+        const q = new AV.Query(QqGroup);
+        q.equalTo('Qq', qq);
+        return await q.find();
     }
-    static findQqGroup(qq, group) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const q = new AV.Query(QqGroup);
-            q.equalTo('Qq', qq);
-            q.equalTo('Group', group.toString());
-            return (yield q.first()) || null;
-        });
+    static async findQqGroup(qq, group) {
+        const q = new AV.Query(QqGroup);
+        q.equalTo('Qq', qq);
+        q.equalTo('Group', group.toString());
+        return await q.first() || null;
     }
-    static fetchAgentIds() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const q = new AV.Query(QqGroup);
-            q.include('AgentQq.AgentId');
-            const all = yield q.find();
-            const distinctMap = new Map();
-            all.forEach(i => distinctMap.set(i.Qq.AgentId, true));
-            return Array.from(distinctMap.keys());
-        });
+    static async fetchAgentIds() {
+        const q = new AV.Query(QqGroup);
+        q.include('AgentQq.AgentId');
+        const all = await q.find();
+        const distinctMap = new Map();
+        all.forEach(i => distinctMap.set(i.Qq.AgentId, true));
+        return Array.from(distinctMap.keys());
     }
-    static fetchGroups() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const q = new AV.Query(QqGroup);
-            const all = yield q.find();
-            const distinctMap = new Map();
-            all.forEach(i => distinctMap.set(i.Group, true));
-            return Array.from(distinctMap.keys());
-        });
+    static async fetchGroups() {
+        const q = new AV.Query(QqGroup);
+        const all = await q.find();
+        const distinctMap = new Map();
+        all.forEach(i => distinctMap.set(i.Group, true));
+        return Array.from(distinctMap.keys());
     }
-    static fetchAllAgentQqs() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const q = new AV.Query(QqGroup);
-            q.include('Qq');
-            return yield q.find();
-        });
+    static async fetchAllAgentQqs() {
+        const q = new AV.Query(QqGroup);
+        q.include('Qq');
+        return await q.find();
     }
-    static addMemberToList(qq, group) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const obj = new QqGroup();
-            obj.Qq = qq;
-            obj.Group = group.toString();
-            return yield obj.save();
-        });
+    static async addMemberToList(qq, group) {
+        const obj = new QqGroup();
+        obj.Qq = qq;
+        obj.Group = group.toString();
+        return await obj.save();
     }
-    static destroyQq(qq) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const groups = yield QqGroup.fetchJoinedGroups(qq);
-            return yield AV.Object.destroyAll(groups);
-        });
+    static async destroyQq(qq) {
+        const groups = await QqGroup.fetchJoinedGroups(qq);
+        return await AV.Object.destroyAll(groups);
     }
 }
 __decorate([
@@ -85,7 +62,6 @@ __decorate([
 __decorate([
     AVProperty_1.default()
 ], QqGroup.prototype, "Group", void 0);
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = QqGroup;
 AV.Object.register(QqGroup);
 //# sourceMappingURL=QqGroup.js.map

@@ -1,12 +1,5 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+Object.defineProperty(exports, "__esModule", { value: true });
 const CommandHandlerBase_1 = require("./CommandHandlerBase");
 const HandleResult_1 = require("../../Message/Handler/HandleResult");
 const AgentQq_1 = require("../../Model/AgentQq");
@@ -16,16 +9,13 @@ class WhoAmIHandler extends CommandHandlerBase_1.default {
         super(...arguments);
         this.Prefix = '我是谁';
     }
-    processCommand(command) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const user = yield AgentQq_1.default.checkUserByQq(command.Message.sender_uid);
-            if (!user)
-                throw new BadCommand_1.default('我好像不认识你诶。请先用指令绑定你的游戏 ID。', command);
-            command.Message.Reply(`啊哈！你就是特工 ${user.AgentId} ！`);
-            return HandleResult_1.default.Handled;
-        });
+    async processCommand(command) {
+        const user = await AgentQq_1.default.checkUserByQq(command.Message.user_id);
+        if (!user)
+            throw new BadCommand_1.default('我好像不认识你诶。请先用指令绑定你的游戏 ID。', command);
+        command.Message.Reply(`啊哈！你就是特工 ${user.AgentId} ！`);
+        return HandleResult_1.default.Handled;
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = WhoAmIHandler;
 //# sourceMappingURL=WhoAmIHandler.js.map

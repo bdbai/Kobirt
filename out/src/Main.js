@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
 const MessageManager_1 = require("./Message/Manager/MessageManager");
@@ -26,7 +27,6 @@ const WeeklyNotifyTask_1 = require("./Task/TaskItem/WeeklyNotifyTask");
 const WeeklySumupTask_1 = require("./Task/TaskItem/WeeklySumupTask");
 // services init
 const AV = require("leancloud-storage");
-const qiniu = require("qiniu");
 class Server {
     static InitMessageManager() {
         const commandHandler = new CommandHandler_1.default('K')
@@ -53,8 +53,6 @@ class Server {
             appId: process.env.LeanAppId,
             appKey: process.env.LeanAppKey
         });
-        qiniu.conf.ACCESS_KEY = process.env.QiniuAK;
-        qiniu.conf.SECRET_KEY = process.env.QiniuSK;
         const taskManager = new TaskManager_1.default(new WeeklyNotifyTask_1.default('马上开始统计本周进度了，赶快更新 AgentStats 资料吧！\n说“K 诶嘿”参加统计，“K 诶嘿 算了吧”退出统计\n本周未更新数据的特工不能参加排名！'), new WeeklySumupTask_1.default());
         const app = express();
         app.use(bodyParser.json());
@@ -64,6 +62,5 @@ class Server {
         return 0;
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Server;
 //# sourceMappingURL=Main.js.map

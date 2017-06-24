@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var HandleResult;
 (function (HandleResult) {
     // 消息未处理
@@ -8,6 +9,5 @@ var HandleResult;
     // 处理并改变了原消息
     HandleResult[HandleResult["Changed"] = 2] = "Changed";
 })(HandleResult || (HandleResult = {}));
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = HandleResult;
 //# sourceMappingURL=HandleResult.js.map

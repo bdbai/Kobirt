@@ -1,1 +1,1 @@
-{"version":3,"file":"LoseFriendHandler.js","sourceRoot":"","sources":["../../../../src/Event/Handler/LoseFriendHandler.ts"],"names":[],"mappings":";AAEA,MAAM,iBAAiB,GAAoB,CAAC,MAAM;AAElD,CAAC,CAAA;;AAED,kBAAe,iBAAiB,CAAC"}
+{"version":3,"file":"LoseFriendHandler.js","sourceRoot":"","sources":["../../../../src/Event/Handler/LoseFriendHandler.ts"],"names":[],"mappings":";;AAEA,MAAM,iBAAiB,GAAoB,CAAC,MAAM;AAElD,CAAC,CAAA;AAED,kBAAe,iBAAiB,CAAC"}

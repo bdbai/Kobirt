@@ -11,7 +11,7 @@ export default class CommandHandler extends HelpHandler {
         command.AccumulatedPrefixes.push(this.Prefix);
 
         if (
-            command.Message.group &&
+            command.Message.message_type === 'group' &&
             command.GetSubCommand(this.Prefix).Content.length > 0
         ) return HandleResult.Skipped;
         return await super.processCommand(command);

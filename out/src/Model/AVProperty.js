@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function AVProperty(propertyName = '') {
     return function (target, key) {
         propertyName = propertyName || key;
@@ -18,7 +19,6 @@ function AVProperty(propertyName = '') {
         }
     };
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AVProperty;
 ;
 //# sourceMappingURL=AVProperty.js.map

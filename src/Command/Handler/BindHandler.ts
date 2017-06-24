@@ -17,7 +17,7 @@ export default class BindHandler extends CommandHandlerBase {
             return HandleResult.Handled;
         }
 
-        const userByQQ = await AgentQq.checkUserByQq(command.Message.sender_uid);
+        const userByQQ = await AgentQq.checkUserByQq(command.Message.user_id);
         if (userByQQ) throw new BadCommand('已经绑定过了哟', command);
 
         const userById = await AgentQq.checkUserByAgentId(id);
@@ -26,7 +26,7 @@ export default class BindHandler extends CommandHandlerBase {
         const knownUsers = await fetchShareFromList();
         if (!knownUsers.find(i => i === id)) throw new BadCommand('我好像找不到你诶。你把 AgentStats 资料分享给 Kobirt 了吗？', command);
 
-        const agentQq = await AgentQq.bindUserByQq(command.Message.sender_uid, id);
+        const agentQq = await AgentQq.bindUserByQq(command.Message.user_id, id);
         command.Message.Reply('绑定完成！接下来请到群中发指令 K 诶嘿 参与该群特工排行榜')
         return HandleResult.Handled;
     }

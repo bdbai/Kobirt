@@ -9,7 +9,7 @@ class DoneHandler extends LoggedinHandlerBase {
     public Prefix = '耶';
 
     public async processUserCommand(command: Command, user: AgentQq) {
-        const meetups = await L8Meetup.fetchFromGroup(command.Message.group_uid);
+        const meetups = await L8Meetup.fetchFromGroup(command.Message.group_id);
         if (meetups.length === 0) throw new BadCommand('咱能先起八不', command);
 
         command.Message.Reply(
@@ -25,7 +25,7 @@ class ExitHandler extends LoggedinHandlerBase {
     public Prefix = '算了吧';
 
     public async processUserCommand(command: Command, user: AgentQq) {
-        const group_uid = command.Message.group_uid;
+        const group_uid = command.Message.group_id;
         const group = group_uid.toString();
         const meetups = await L8Meetup.fetchFromQq(user);
         const thisMeetup = meetups.find(i => i.Group === group);
@@ -44,7 +44,7 @@ class AddHandler extends LoggedinHandlerBase {
     public Prefix = '带上我';
 
     public async processUserCommand(command: Command, user: AgentQq) {
-        const group_uid = command.Message.group_uid;
+        const group_uid = command.Message.group_id;
         const group = group_uid.toString();
         const meetups = await L8Meetup.fetchFromQq(user);
         if (meetups.find(i => i.Group === group)) {
@@ -70,7 +70,7 @@ ${aprefix} 耶 - 完成起八`;
     protected acceptFriendMessage = false;
 
     public async processUserCommand(command: Command, user: AgentQq) {
-        const meetups = await L8Meetup.fetchFromGroup(command.Message.group_uid);
+        const meetups = await L8Meetup.fetchFromGroup(command.Message.group_id);
         if (meetups.length > 0) {
             // Display this L8Meetup
             const len = meetups.length;
@@ -81,7 +81,7 @@ ${this.tips(`${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.
             );
         } else {
             // Create a new L8Meetup
-            await L8Meetup.addQqToMeetup(user, command.Message.group_uid);
+            await L8Meetup.addQqToMeetup(user, command.Message.group_id);
             command.Message.Reply(
                 `${user.AgentId} 发起了起八！其他人可以发${this.tips(`${command.GetAccumulatedPrefix()} ${command.GetCurrentContent(this.Prefix)}`)}`
             );

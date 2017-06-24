@@ -7,7 +7,7 @@ import NewGroupMemberHandler from './Handler/NewGroupMemberHandler';
 import LoseGroupMemberHandler from './Handler/LoseGroupMemberHandler';
 
 const EventDispatcher: IEventDispatcher = (message: IMessage) => {
-    switch (message.event) {
+    /*switch (message.event) {
         case 'new_friend':
             NewFriendHandler(message.params[0]);
             break;
@@ -20,7 +20,7 @@ const EventDispatcher: IEventDispatcher = (message: IMessage) => {
         case 'lose_group_member':
             LoseGroupMemberHandler(message.params[0], message.params[1]);
             break;
-    }
+    }*/
     message.Dispose();
 }
 

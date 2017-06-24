@@ -1,25 +1,16 @@
 interface IMessage {
-    id: number,
-    class: string,
-    time: number,
-    content: string,
-    sender: string,
-    sender_id: number,
-    sender_uid: number,
-    receiver: string,
-    receiver_id: number,
-    receiver_uid: number,
-    group: string,
+    message: string,
+    user_id: number,
+    // group: string,
     group_id: number,
-    group_uid: number,
-    type: string,
+    message_type: string,
     post_type: string,
 
-    event?: string,
-    params?: any,
+    // event?: string,
+    // params?: any,
 
-    Reply: (content: String) => any
-    Dispose: () => any
+    Reply(content: string): any
+    Dispose(): any
 }
 
 export default IMessage;

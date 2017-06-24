@@ -33,7 +33,6 @@ import WeeklySumupTask from './Task/TaskItem/WeeklySumupTask';
 
 // services init
 import * as AV from 'leancloud-storage';
-import * as qiniu from 'qiniu';
 
 class Server {
 
@@ -65,9 +64,6 @@ class Server {
             appId: process.env.LeanAppId,
             appKey: process.env.LeanAppKey
         });
-        qiniu.conf.ACCESS_KEY = process.env.QiniuAK;
-        qiniu.conf.SECRET_KEY = process.env.QiniuSK;
-
         const taskManager: ITaskManager = new TaskManager(
             new WeeklyNotifyTask('马上开始统计本周进度了，赶快更新 AgentStats 资料吧！\n说“K 诶嘿”参加统计，“K 诶嘿 算了吧”退出统计\n本周未更新数据的特工不能参加排名！'),
             new WeeklySumupTask()

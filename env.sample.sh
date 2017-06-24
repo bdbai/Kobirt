@@ -5,7 +5,7 @@
 export TZ='Asia/Shanghai'
 
 # Mojo-Webqq server address
-export WebqqURL='http://localhost:5000'
+export WebqqURL='http://localhost:5700'
 
 # API key for Agent Stats
 # available at https://www.agent-stats.com/preferences.php

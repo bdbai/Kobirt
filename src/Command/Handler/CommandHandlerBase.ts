@@ -15,8 +15,8 @@ abstract class CommandHandlerBase implements ICommandHandler {
 
     protected accepted = (command: Command) =>
         (
-            (command.Message.type === 'friend_message' && this.acceptFriendMessage) ||
-            (command.Message.type === 'group_message' && this.acceptGroupMessage)
+            (command.Message.message_type === 'private' && this.acceptFriendMessage) ||
+            (command.Message.message_type === 'group' && this.acceptGroupMessage)
         ) && (
             typeof this.Prefix === 'string' ?
             command.StartsWith(this.Prefix) :

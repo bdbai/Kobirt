@@ -17,8 +17,7 @@
     "express": "^4.14.0",
     "leancloud-storage": "^1.5.3",
     "node-fetch": "^1.6.3",
-    "node-schedule": "^1.2.0",
-    "qiniu": "^6.1.13"
+    "node-schedule": "^1.2.0"
   },
   "scripts": {
     "start": "node ./out/server.js"
