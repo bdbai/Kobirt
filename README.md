@@ -1,6 +1,6 @@
 # Kobirt
-基于 [Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq) 的 QQ 机器人，K 菊专用。  
-K 菊，Ingress 昆绿大佬，被<del>咸鱼</del>苏绿膜。
+基于酷 Q 框架的 QQ 机器人，K 菊专用。  
+K 菊，Ingress 昆绿大佬，被苏绿膜。
 
 ## 使用方法
 ### 准备
@@ -10,17 +10,16 @@ K 菊，Ingress 昆绿大佬，被<del>咸鱼</del>苏绿膜。
 Kobirt 需要 LeacCloud 作为存储后端。
 2. 在 AgentStats 上创建一个账户  
 用于接收分享的特工资料。
+3. 在 Trello 上收藏 [Ingress Medal Arts](https://trello.com/b/LvwOjrYP/ingress-medal-arts)  
+用于查询拼图。
 
 ### 搭建
-1. 在服务器上部署 [sjdy521/Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq) 项目，设置上报地址为 `http://localhost:5001`
-2. 按照提示登录机器人 QQ
-3. 复制 `env.sample.sh` 到 `env.sh`，修改其中的环境变量值
-4. 执行命令
-```sh
-source env.sh
-npm install
-npm start
-```
+1. 在项目目录中构建 Docker 镜像
+2. 在新的 Docker 容器中运行该镜像，将 5000 端口映射到主机
+3. 使用 `docker exec` 进入镜像 shell 环境，将 [coolq-http-api](https://github.com/richardchien/coolq-http-api/releases) 的 cpk 文件下载至 `/home/user/coolq/app` 目录
+4. 在浏览器中打开 [localhost:9000](http://localhost:9000)，登录并重启酷 Q 客户端，启用 HTTP API 插件
+
+<del>是挺难搞的，别折腾了。</del>
 
 ### 支持的命令和功能
 #### 私聊
@@ -61,18 +60,4 @@ K 忘记 - 删除关键词回复
 手动屏蔽其它机器人，避免打扰其它群员。
 
 ## 二次开发
-本项目使用 TypeScript 编写。
-### 普通消息处理
-示例见 `src/Message/Handler/HelloHandler`。
-
-1. 自定义一个消息处理类
-2. 实现接口 `Message/Handler/IMessageHandler` 和其中的 `Handle` 方法
-3. 在 `Main.ts` 中引入该类，并于 `Insert your message handlers here!` 处添加类的实例
-
-### 命令消息处理
-示例见 `src/Command/Handler/HelpHandler.ts`。
-
-1. 自定义一个命令处理类，继承 `Command/Handler/CommandHandlerBase`
-2. 声明 `Prefix` 字段为命令文本，实现 `processCommand` 方法
-3. 在 `Main.ts` 中引入该类，并于 `Insert your command handlers here!` 处注册类的实例
-
+<del>不存在的。</del>
