@@ -8,9 +8,8 @@ if [ -d /home/user/Kobirt ]; then
 fi
 
 cd /home/user
-git clone https://github.com/bdbai/Kobirt
+git clone -b coolq https://github.com/bdbai/Kobirt
 cd ./Kobirt
-git checkout coolq
 npm install
 cp words.sample.json words.json
 
