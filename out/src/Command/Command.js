@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Command {
     constructor(Content, Message, AccumulatedPrefixes = []) {
         this.Content = Content;
@@ -29,6 +30,5 @@ class Command {
         return this.AccumulatedPrefixes.join(' ');
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Command;
 //# sourceMappingURL=Command.js.map

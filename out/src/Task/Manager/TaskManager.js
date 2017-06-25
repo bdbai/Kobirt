@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const Schedule = require("node-schedule");
 class TaskManager {
     constructor(...tasks) {
@@ -21,6 +22,5 @@ class TaskManager {
         });
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = TaskManager;
 //# sourceMappingURL=TaskManager.js.map

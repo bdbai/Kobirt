@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const API_1 = require("../../Webqq/API");
 const NewGroupMemberHandler = (friend, group) => {
     API_1.SendGroupMessage(group.uid.toString(), `欢迎新人 ${friend.name}！
@@ -8,6 +9,5 @@ const NewGroupMemberHandler = (friend, group) => {
 
 记得膜 K~`);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = NewGroupMemberHandler;
 //# sourceMappingURL=NewGroupMemberHandler.js.map

@@ -11,6 +11,13 @@ class RequestAdapter {
                 return;
             }*/
 
+            if (req.body.message instanceof Array) {
+                req.body.message = (req.body.message as Array<any>)
+                    .filter(seg => seg.type === 'text')
+                    .map(seg => seg.data.text)
+                    .join('');
+            }
+
             const rawMessage = Object.assign(
                 {},
                 req.body,

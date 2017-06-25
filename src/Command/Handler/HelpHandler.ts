@@ -7,7 +7,7 @@ export default class HelpHandler extends CommandHandlerBase {
 
     public async processCommand(command: Command): Promise<HandleResult> {
         const aprefix = command.GetAccumulatedPrefix();
-        if (command.Message.group) {
+        if (command.Message.message_type === 'group') {
             command.Message.Reply(
 `Hello! 我是 Kobirt。请用指令告诉我您想做什么：
 ${aprefix} help - 输出这条信息

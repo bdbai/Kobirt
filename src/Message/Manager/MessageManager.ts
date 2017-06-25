@@ -11,30 +11,21 @@ class MessageManager implements IMessageManager {
     ) { }
 
     public HandlerRegister<T extends IMessageHandler>(
-        handler: { new (): T; }
+        handler: { new(): T; }
     ): void {
         this.handlers.push(new handler());
     }
 
     public async ProcessMessage(message: IMessage): Promise<void> {
-        switch (message.post_type) {
-            case 'send_message':
-                message.Dispose();
+        let handled = false;
+        for (const handler of this.handlers) {
+            const result = await handler.Handle(message);
+            if (result === HandleResult.Handled) {
+                handled = true;
                 break;
-            case 'receive_message':
-                let handled = false;
-                for (const handler of this.handlers) {
-                    const result = await handler.Handle(message);
-                    if (result === HandleResult.Handled) {
-                        handled = true;
-                        break;
-                    }
-                }
-                break;
-            case 'event':
-                this.eventDispatcher(message);
-                break;
+            }
         }
+        // this.eventDispatcher(message);
     }
 
 }

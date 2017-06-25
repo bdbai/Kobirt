@@ -1,6 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const LoseFriendHandler = (friend) => {
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = LoseFriendHandler;
 //# sourceMappingURL=LoseFriendHandler.js.map

@@ -1,27 +1,22 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+Object.defineProperty(exports, "__esModule", { value: true });
 const QqGroup_1 = require("../../Model/QqGroup");
-const API_1 = require("../../Webqq/API");
+const CoolQRichMessage_1 = require("../../Message/Rich/CoolQRichMessage");
+const TextSegment_1 = require("../../Message/Rich/TextSegment");
 class WeeklyNotifyTask {
     constructor(message) {
         this.message = message;
         this.Name = 'WeeklyNotify:' + this.message;
         this.Pattern = '0 0 20 * * 0';
     }
-    DoWork() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const groups = yield QqGroup_1.default.fetchGroups();
-            groups.forEach(group => API_1.SendGroupMessage(group, this.message));
-        });
+    async DoWork() {
+        const groups = await QqGroup_1.default.fetchGroups();
+        const richMessage = new CoolQRichMessage_1.default();
+        richMessage.AddSegment(new TextSegment_1.default(this.message));
+        groups
+            .map(g => parseInt(g))
+            .forEach(group => richMessage.SendToGroup(group));
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = WeeklyNotifyTask;
 //# sourceMappingURL=WeeklyNotifyTask.js.map

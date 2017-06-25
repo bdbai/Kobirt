@@ -20,6 +20,14 @@ function GreaterLevel(i1: string, i2: string) {
 }
 
 export async function loadUserFromId(AgentId: string, startYear = '2012', startMonth = '01', startDay = '01'): Promise<IUser> {
+    try {
+        return await tryLoadUserFromId(AgentId, startYear, startMonth, startDay);
+    } catch (_) {
+        return await tryLoadUserFromId(AgentId, startYear, startMonth, startDay);
+    }
+}
+
+async function tryLoadUserFromId(AgentId: string, startYear = '2012', startMonth = '01', startDay = '01'): Promise<IUser> {
     const date = new Date();
     const response = await fetch(
         `https://api.agent-stats.com/share/${AgentId}/${startYear}-${startMonth}-${startDay}`,

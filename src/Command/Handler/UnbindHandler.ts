@@ -8,7 +8,7 @@ export default class UnbindHandler extends CommandHandlerBase {
     public Prefix = '注销';
 
     public async processCommand(command: Command): Promise<HandleResult> {
-        const userByQQ = await AgentQq.checkUserByQq(command.Message.sender_uid);
+        const userByQQ = await AgentQq.checkUserByQq(command.Message.user_id);
         if (!userByQQ) throw new BadCommand('你还没绑定呢', command);
 
         await userByQQ.unbind();

@@ -49,7 +49,7 @@ export class BlacklistHandler extends CommandHandlerBase {
     private blacklistCount = new Map<number, number>();
 
     public async processCommand(command: Command) {
-        const senderQq = command.Message.sender_uid;
+        const senderQq = command.Message.user_id;
         for (const blacklist of words.blacklist) {
             if (blacklist.qq === senderQq) {
                 // Block this QQ

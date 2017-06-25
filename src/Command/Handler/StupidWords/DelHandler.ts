@@ -13,7 +13,7 @@ export default class DelHandler extends CommandHandlerBase {
     public async processCommand(command: Command) {
         // Super Anti-Konammzju Design
         // a.k.a SAD
-        if (command.Message.sender_uid === 40603473) {
+        if (command.Message.user_id === 40603473) {
             throw new BadCommand('寿司！你看看你！', command);
         }
 

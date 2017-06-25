@@ -4,7 +4,8 @@ import QqGroup from '../../Model/QqGroup';
 import IUser from '../../Ingress/IUser';
 import IMedal from '../../Ingress/IMedal';
 import { loadUserFromId } from '../../Ingress/AgentStats/ShareAPI';
-import { SendGroupMessage } from '../../Webqq/API';
+import CoolQRichMessage from '../../Message/Rich/CoolQRichMessage';
+import TextSegment from '../../Message/Rich/TextSegment';
 
 interface ExportedData {
     name: string,
@@ -56,7 +57,7 @@ export default class WeeklySumupTask implements ITask {
             };
             qq.LastAp = ap.progression.total;
             qq.LastMu = mu.progression.total;
-            qq.save();
+            qq.save().then(() => {}, () => qq.save());
 
             return ret;
         }
@@ -99,7 +100,10 @@ export default class WeeklySumupTask implements ITask {
         }
 
         message += '\n\nNaN 表示第一次参与排行榜\n排行榜仅供娱乐';
-        SendGroupMessage(groupUid, message);
+
+        const richMessage = new CoolQRichMessage();
+        richMessage.AddSegment(new TextSegment(message));
+        richMessage.SendToGroup(parseInt(groupUid));
     }
 
     public async DoWork() {
