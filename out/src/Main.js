@@ -20,6 +20,7 @@ const L8MeetupHandler_1 = require("./Command/Handler/L8MeetupHandler");
 const DisplayHandler_1 = require("./Command/Handler/StupidWords/DisplayHandler");
 const AddHandler_1 = require("./Command/Handler/StupidWords/AddHandler");
 const DelHandler_1 = require("./Command/Handler/StupidWords/DelHandler");
+const ArtHandler_1 = require("./Command/Handler/ArtHandler");
 // Event dispatcher
 const EventDispatcher_1 = require("./Event/EventDispatcher");
 const TaskManager_1 = require("./Task/Manager/TaskManager");
@@ -38,6 +39,7 @@ class Server {
             .RegisterSubHandler(new JoinGroupHandler_1.default())
             .RegisterSubHandler(new ShowoffHandler_1.default())
             .RegisterSubHandler(new L8MeetupHandler_1.default())
+            .RegisterSubHandler(new ArtHandler_1.default())
             .RegisterSubHandler(new AddHandler_1.default())
             .RegisterSubHandler(new DelHandler_1.default())
             .RegisterSubHandler(new DisplayHandler_1.DisplayHandler());

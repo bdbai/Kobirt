@@ -15,10 +15,10 @@ export ASKey=''
 export LeanAppId=''
 export LeanAppKey=''
 
-# Account tokens for Qiniu
-# export QiniuAK=''
-# export QiniuSK=''
-# export QiniuBucket=''
+# Trello account key and token
+# See https://developers.trello.com
+export TrelloKey=''
+export TrelloToken=''
 
 # Stupid words JSON file location
 export StupidWordsFile=$PWD/words.sample.json

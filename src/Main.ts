@@ -21,6 +21,7 @@ import L8MeetupHandler from './Command/Handler/L8MeetupHandler';
 import { BlacklistHandler, DisplayHandler } from './Command/Handler/StupidWords/DisplayHandler';
 import StupidWordsAddHandler from './Command/Handler/StupidWords/AddHandler';
 import StupidWordsDelHandler from './Command/Handler/StupidWords/DelHandler';
+import ArtHandler from './Command/Handler/ArtHandler';
 
 // Event dispatcher
 import EventDispatcher from './Event/EventDispatcher';
@@ -47,6 +48,7 @@ class Server {
             .RegisterSubHandler(new JoinGroupHandler())
             .RegisterSubHandler(new ShowoffHandler())
             .RegisterSubHandler(new L8MeetupHandler())
+            .RegisterSubHandler(new ArtHandler())
             .RegisterSubHandler(new StupidWordsAddHandler())
             .RegisterSubHandler(new StupidWordsDelHandler())
             .RegisterSubHandler(new DisplayHandler());
