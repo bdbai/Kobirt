@@ -5,7 +5,6 @@ const HandleResult_1 = require("../../Message/Handler/HandleResult");
 const BadCommand_1 = require("../Error/BadCommand");
 const CoolQRichMessage_1 = require("../../Message/Rich/CoolQRichMessage");
 const TextSegment_1 = require("../../Message/Rich/TextSegment");
-const LinkSegment_1 = require("../../Message/Rich/LinkSegment");
 const TrelloAPI_1 = require("../../Ingress/Art/TrelloAPI");
 class ArtHandler extends CommandHandlerBase_1.default {
     constructor() {
@@ -34,30 +33,16 @@ class ArtHandler extends CommandHandlerBase_1.default {
         }
         const realName = encodeURIComponent(cards[0].name.replace(/\[.*\]/, '').trim());
         const detail = await this.trello.FetchCardDetail(cards[0]);
-        command.Message.Reply('为你找到了拼图：' + detail.name);
+        command.Message.Dispose();
         /*detail.attachments[0].previews.pop().url*/ //图片这是
         //            .AddSegment(new TextSegment('https://ingressmm.com/?find=' + realName))
-        const trelloLinkMessage = new CoolQRichMessage_1.default();
-        trelloLinkMessage
-            .AddSegment(new LinkSegment_1.default(detail.shortUrl, 'Trello', detail.name))
-            .ReplyToMessage(command.Message);
-        const aqmhLinkMessage = new CoolQRichMessage_1.default();
-        aqmhLinkMessage
-            .AddSegment(new LinkSegment_1.default('https://bdbai.github.io/supreme-getlink/jump-aqmh.html#' + realName, 'AQMissionHelper', detail.name))
-            .ReplyToMessage(command.Message);
-        const moLinkMessage = new CoolQRichMessage_1.default();
-        moLinkMessage
-            .AddSegment(new LinkSegment_1.default('https://ingressmosaik.com/search?f=' + realName, 'Ingress Mosaik', detail.name))
-            .ReplyToMessage(command.Message);
-        const descLines = detail.desc.split('\n');
-        while (descLines.length > 0) {
-            const piece = descLines.splice(0, 8);
-            new CoolQRichMessage_1.default()
-                .AddSegment(new TextSegment_1.default(piece.join('\n')))
-                .ReplyToMessage(command.Message);
-        }
         new CoolQRichMessage_1.default()
+            .AddSegment(new TextSegment_1.default('为你找到了拼图：' + detail.name))
+            .AddSegment(new TextSegment_1.default(detail.desc))
             .AddSegment(new TextSegment_1.default(detail.labels.map(i => i.name).join('\n')))
+            .AddSegment(new TextSegment_1.default('Trello: ' + detail.shortUrl))
+            .AddSegment(new TextSegment_1.default('AQMissionHelper: https://bdbai.github.io/supreme-getlink/jump-aqmh.html#' + realName))
+            .AddSegment(new TextSegment_1.default('Ingress Mosaik: https://ingressmosaik.com/search?f=' + realName))
             .ReplyToMessage(command.Message);
         return HandleResult_1.default.Handled;
     }

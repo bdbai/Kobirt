@@ -40,6 +40,9 @@ class BlacklistHandler extends CommandHandlerBase_1.default {
         this.blacklistCount = new Map();
     }
     async processCommand(command) {
+        if (words.silentlist.find(i => i.group === command.Message.group_id)) {
+            return HandleResult_1.default.Skipped;
+        }
         const senderQq = command.Message.user_id;
         for (const blacklist of words.blacklist) {
             if (blacklist.qq === senderQq) {

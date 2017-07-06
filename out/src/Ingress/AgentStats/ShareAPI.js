@@ -37,7 +37,6 @@ async function tryLoadUserFromId(AgentId, startYear = '2012', startMonth = '01',
     }
     else {
         resultObj = JSON.parse(result);
-        console.log(resultObj);
     }
     const Medals = Array();
     let AP = 0;
