@@ -49,6 +49,10 @@ export class BlacklistHandler extends CommandHandlerBase {
     private blacklistCount = new Map<number, number>();
 
     public async processCommand(command: Command) {
+        if (words.silentlist.find(i => i.group === command.Message.group_id)) {
+            return HandleResult.Skipped;
+        }
+
         const senderQq = command.Message.user_id;
         for (const blacklist of words.blacklist) {
             if (blacklist.qq === senderQq) {

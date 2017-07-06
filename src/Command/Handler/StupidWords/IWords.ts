@@ -8,6 +8,9 @@ interface IWords {
         retry: number,
         text: Array<string>
     }>;
+    silentlist: Array<{
+        group:number
+    }>;
 }
 
 export default IWords;
