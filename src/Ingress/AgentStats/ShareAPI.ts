@@ -40,7 +40,6 @@ async function tryLoadUserFromId(AgentId: string, startYear = '2012', startMonth
         throw new Error('No ASKey specified.');
     } else {
         resultObj = JSON.parse(result);
-        console.log(resultObj);
     }
 
     const Medals = Array<IMedal>();
