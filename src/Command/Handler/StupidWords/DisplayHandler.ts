@@ -49,10 +49,6 @@ export class BlacklistHandler extends CommandHandlerBase {
     private blacklistCount = new Map<number, number>();
 
     public async processCommand(command: Command) {
-        if (words.silentlist.find(i => i.group === command.Message.group_id)) {
-            return HandleResult.Skipped;
-        }
-
         const senderQq = command.Message.user_id;
         for (const blacklist of words.blacklist) {
             if (blacklist.qq === senderQq) {
@@ -83,6 +79,10 @@ export class DisplayHandler extends CommandHandlerBase {
     }
 
     public async processCommand(command: Command) {
+        if (words.silentlist.find(i => i.group === command.Message.group_id)) {
+            return HandleResult.Skipped;
+        }
+
         for (const word of words.words) {
             if (!!word.kw.find(i =>
                 command.Content.toLowerCase().
