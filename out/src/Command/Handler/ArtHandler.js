@@ -4,7 +4,7 @@ const CommandHandlerBase_1 = require("./CommandHandlerBase");
 const HandleResult_1 = require("../../Message/Handler/HandleResult");
 const BadCommand_1 = require("../Error/BadCommand");
 const CoolQRichMessage_1 = require("../../Message/Rich/CoolQRichMessage");
-const TextSegment_1 = require("../../Message/Rich/TextSegment");
+const LineSegment_1 = require("../../Message/Rich/LineSegment");
 const TrelloAPI_1 = require("../../Ingress/Art/TrelloAPI");
 class ArtHandler extends CommandHandlerBase_1.default {
     constructor() {
@@ -37,12 +37,12 @@ class ArtHandler extends CommandHandlerBase_1.default {
         /*detail.attachments[0].previews.pop().url*/ //图片这是
         //            .AddSegment(new TextSegment('https://ingressmm.com/?find=' + realName))
         new CoolQRichMessage_1.default()
-            .AddSegment(new TextSegment_1.default('为你找到了拼图：' + detail.name))
-            .AddSegment(new TextSegment_1.default(detail.desc))
-            .AddSegment(new TextSegment_1.default(detail.labels.map(i => i.name).join('\n')))
-            .AddSegment(new TextSegment_1.default('Trello: ' + detail.shortUrl))
-            .AddSegment(new TextSegment_1.default('AQMissionHelper: https://bdbai.github.io/supreme-getlink/jump-aqmh.html#' + realName))
-            .AddSegment(new TextSegment_1.default('Ingress Mosaik: https://ingressmosaik.com/search?f=' + realName))
+            .AddSegment(new LineSegment_1.default('为你找到了拼图：' + detail.name))
+            .AddSegment(new LineSegment_1.default(detail.desc))
+            .AddSegment(new LineSegment_1.default(detail.labels.map(i => i.name).join('\n')))
+            .AddSegment(new LineSegment_1.default('Trello: ' + detail.shortUrl))
+            .AddSegment(new LineSegment_1.default('AQMissionHelper: https://bdbai.github.io/supreme-getlink/jump-aqmh.html#' + realName))
+            .AddSegment(new LineSegment_1.default('Ingress Mosaik: https://ingressmosaik.com/search?f=' + realName))
             .ReplyToMessage(command.Message);
         return HandleResult_1.default.Handled;
     }

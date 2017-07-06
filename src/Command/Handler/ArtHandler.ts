@@ -3,7 +3,7 @@ import Command from '../Command';
 import HandleResult from '../../Message/Handler/HandleResult';
 import BadCommand from '../Error/BadCommand';
 import CoolQRichMessage from '../../Message/Rich/CoolQRichMessage';
-import LineSegment from '../../Message/Rich/TextSegment';
+import LineSegment from '../../Message/Rich/LineSegment';
 import TrelloAPI from '../../Ingress/Art/TrelloAPI';
 import ICard from '../../Ingress/Art/ICard';
 
